@@ -1,0 +1,70 @@
+.menu-box {
+    -fx-background-color: #2e3136;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #1c1e22;
+}
+
+.toggle-button {
+    -fx-background-insets: 5px;
+    -fx-background-radius: 32;
+    -fx-background-color: #36393e;
+    -fx-background-repeat: no-repeat;
+    -fx-pref-height: 64px;
+    -fx-pref-width: 64px;
+}
+
+.toggle-button:hover, .toggle-button:selected {
+    -fx-background-color: #7289da;
+}
+
+.toggle-button:selected {
+    -fx-background-radius: 12;
+}
+
+.publication {
+    -fx-background-image: url("../Images/ListView/Publication/publication.png");
+}
+
+.publication:hover, .publication:selected {
+    -fx-background-image: url("../Images/ListView/Publication/publication-hover-selected.png");
+}
+
+.author {
+    -fx-background-image: url("../Images/ListView/Author/author.png");
+}
+
+.author:hover, .author:selected {
+    -fx-background-image: url("../Images/ListView/Author/author-hover-selected.png");
+}
+
+.patent {
+    -fx-background-image: url("../Images/ListView/Patent/patent.png");
+}
+
+.patent:hover, .patent:selected {
+    -fx-background-image: url("../Images/ListView/Patent/patent-hover-selected.png");
+}
+
+.certificate {
+    -fx-background-image: url("../Images/ListView/Certificate/certificate.png");
+}
+
+.certificate:hover, .certificate:selected {
+    -fx-background-image: url("../Images/ListView/Certificate/certificate-hover-selected.png");
+}
+
+.collection {
+    -fx-background-image: url("../Images/ListView/Collection/collection.png");
+}
+
+.collection:hover, .collection:selected {
+    -fx-background-image: url("../Images/ListView/Collection/collection-hover-selected.png");
+}
+
+.conference {
+    -fx-background-image: url("../Images/ListView/Conference/conference.png");
+}
+
+.conference:hover, .conference:selected {
+    -fx-background-image: url("../Images/ListView/Conference/conference-hover-selected.png");
+}

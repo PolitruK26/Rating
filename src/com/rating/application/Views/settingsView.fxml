@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXMasonryPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@../StyleSheet/settingsViewStyle.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rating.application.Views.SettingsViewController">
+   <center>
+      <JFXMasonryPane fx:id="content" />
+   </center>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" prefHeight="40.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="defaultButton" focusTraversable="false" mnemonicParsing="false" text="По умолчанию" />
+            <Button fx:id="saveButton" disable="true" focusTraversable="false" mnemonicParsing="false" text="Сохранить" />
+            <Button fx:id="cancelButton" disable="true" focusTraversable="false" mnemonicParsing="false" text="Отмена">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

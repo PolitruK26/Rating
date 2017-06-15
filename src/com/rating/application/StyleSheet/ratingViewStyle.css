@@ -1,0 +1,62 @@
+* {
+    -border-color: #1c1e22;
+
+    -top-bar-color: #1e2124;
+
+    -bottom-bar-color: #282b30;
+    -bottom-bar-border: #1c1e22;
+
+    -tooltip-background-color: #7289da;
+
+    -top-bar-menu-button-text-fill: #afb0b2;
+    -top-bar-menu-button-hover-color: #2e3136;
+    -top-bar-menu-button-hover-text-fill: #aaabad;
+    -top-bar-menu-button-pressed-color: #FFF;
+    -top-bar-menu-button-pressed-text-fill: #36393e;
+
+    -left-menu-background-color: #2e3136;
+
+    -window-background-color: #36393e;
+}
+
+.root {
+    -fx-focus-color: transparent;
+}
+
+.background {
+    -fx-background-color: -window-background-color;
+    -fx-border-width: 0px;
+}
+
+.label {
+    -fx-font-size: 12px;
+    -fx-padding: 5px;
+}
+
+.label-main {
+    -fx-text-fill: #7289da;
+    -fx-font-size: 16px;
+    -fx-background-radius: 100px;
+    -fx-background-color: #2e3136;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-pref-width: 15;
+}
+
+.scroll-bar > .thumb {
+    -fx-background-color: #1e2124;
+    -fx-opacity: 0.5;
+    -fx-background-radius: 10;
+}
+
+.scroll-bar:hover > .thumb {
+    -fx-opacity: 1;
+}
+
+.scroll-bar > .increment-button,
+.scroll-bar > .decrement-button {
+    -fx-opacity: 0;
+}

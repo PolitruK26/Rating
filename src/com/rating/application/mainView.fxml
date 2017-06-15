@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane fx:id="window" prefHeight="720.0" prefWidth="1280.0" styleClass="background" stylesheets="@StyleSheet/mainViewStyle.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rating.application.MainController">
+    <top>
+        <AnchorPane fx:id="topMenu" styleClass="top-bar" BorderPane.alignment="CENTER">
+            <Button fx:id="close" focusTraversable="false" mnemonicParsing="false" styleClass="button-close" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0" />
+            <ToggleButton fx:id="maximize" focusTraversable="false" layoutX="926.0" layoutY="1.0" mnemonicParsing="false" styleClass="button-maximize" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="0.0" />
+            <Button fx:id="minimize" focusTraversable="false" layoutX="828.0" mnemonicParsing="false" styleClass="button-minimize" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0" />
+            <Separator fx:id="separator" focusTraversable="false" orientation="VERTICAL" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="118.0" AnchorPane.topAnchor="10.0" />
+            <ToggleButton fx:id="settingsModel" focusTraversable="false" mnemonicParsing="false" prefHeight="49.0" prefWidth="24.0" styleClass="button-settings" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="0.0" />
+            <ToggleButtonGroup prefHeight="25.0" prefWidth="274.0" selectionType="SINGLE" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="12.0">
+                <toggles>
+                    <ToggleButton fx:id="listModel" focusTraversable="false" mnemonicParsing="false" selected="true" styleClass="top-bar-menu" text="Списки" />
+                    <ToggleButton fx:id="chartModel" focusTraversable="false" mnemonicParsing="false" styleClass="top-bar-menu" text="Графики" />
+                    <ToggleButton fx:id="reportModel" focusTraversable="false" mnemonicParsing="false" styleClass="top-bar-menu" text="Отчеты" />
+                    <ToggleButton fx:id="ratingModel" focusTraversable="false" mnemonicParsing="false" styleClass="top-bar-menu" text="Рейтинг" />
+                </toggles>
+            </ToggleButtonGroup>
+        </AnchorPane>
+    </top>
+    <bottom>
+        <AnchorPane prefHeight="24.0" styleClass="bottom-bar" BorderPane.alignment="CENTER">
+            <Label focusTraversable="false" text="Оценка эффективности научной деятельности (Alpha Build)" textFill="#7289da" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0">
+                <opaqueInsets>
+                    <Insets />
+                </opaqueInsets>
+            </Label>
+            <Button fx:id="resize" focusTraversable="false" mnemonicParsing="false" styleClass="button-resize" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        </AnchorPane>
+    </bottom>
+    <center>
+        <StackPane fx:id="content" />
+    </center>
+</BorderPane>

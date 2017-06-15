@@ -1,0 +1,202 @@
+* {
+    -border-color: #1c1e22;
+
+    -top-bar-color: #1e2124;
+
+    -bottom-bar-color: #282b30;
+    -bottom-bar-border: #1c1e22;
+
+    -tooltip-background-color: #7289da;
+
+    -top-bar-menu-button-text-fill: #afb0b2;
+    -top-bar-menu-button-hover-color: #2e3136;
+    -top-bar-menu-button-hover-text-fill: #aaabad;
+    -top-bar-menu-button-pressed-color: #FFF;
+    -top-bar-menu-button-pressed-text-fill: #36393e;
+
+    -left-menu-background-color: #2e3136;
+
+    -window-background-color: #36393e;
+}
+
+.button {
+    -fx-background-color: -bottom-bar-color;
+    -fx-background-radius: 5px;
+    -fx-border-width: 0px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.button:hover {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: -bottom-bar-color;
+}
+
+.menu-item .label, .combo-box-popup .list-view .list-cell {
+    -fx-text-fill: #a2a3a5;
+}
+
+.menu-item:hover .label, .combo-box-popup .list-view .list-cell:hover {
+    -fx-text-fill: #f5f5f6;
+}
+
+.menu-item, .combo-box-popup .list-view .list-cell {
+    -fx-background-color: transparent;
+}
+
+.menu-item:hover, .combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #25282d;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.context-menu {
+    -fx-background-color: #282b30;
+    -fx-background-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #1e2124;
+}
+
+.text-field, .combo-box {
+    -fx-background-color: #282b30;
+    -fx-background-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #1e2124;
+    -fx-prompt-text-fill: #5d6064;
+    -fx-text-fill: #b4b5b7;
+    -fx-pref-height: 30px;
+}
+
+.combo-box-popup > .list-view {
+    -fx-background-color: #282b30;
+    -fx-background-radius: 0 0 5 5;
+    -fx-border-width: 0 1 1 1;
+    -fx-border-radius: 0 0 5 5;
+    -fx-border-color: #1e2124;
+}
+
+.combo-box:showing {
+    -fx-background-radius: 5 5 0 0;
+    -fx-border-radius: 5 5 0 0;
+    -fx-border-width: 1 1 0 1;
+}
+
+.combo-box > .text-field {
+    -fx-background-color: #282b30;
+    -fx-background-radius: 5px;
+    -fx-prompt-text-fill: #5d6064;
+    -fx-text-fill: #b4b5b7;
+    -fx-border-width: 0px;
+}
+
+.combo-box > .arrow-button {
+    -fx-background-color: #282b30;
+}
+
+.combo-box > .arrow-button > .arrow {
+    -fx-background-color: white;
+}
+
+.combo-box .cell {
+    -fx-text-fill: #a2a3a5;
+}
+
+.background-list {
+    -fx-background-color: #414449;
+    -fx-background-radius: 3px;
+    -fx-effect: dropshadow(gaussian, #303337, 10, 0, 0, 2);
+}
+
+.label {
+    -fx-text-fill: #afb0b2;
+}
+
+.label-big {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.label-italic {
+    -fx-font-style: italic;
+}
+
+.label-tag {
+    -fx-background-color: #43b581;
+    -fx-background-radius: 10px;
+    -fx-text-fill: #FFFFFF;
+    -fx-label-padding: 5px;
+}
+
+.label-tags {
+    -fx-background-color: #7289da;
+    -fx-background-radius: 10px;
+    -fx-text-fill: #FFFFFF;
+    -fx-label-padding: 5px;
+}
+
+.list-view, .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-pref-width: 15;
+}
+
+.scroll-bar > .thumb {
+    -fx-background-color: #1e2124;
+    -fx-opacity: 0.5;
+    -fx-background-radius: 10;
+}
+
+.scroll-bar:hover > .thumb {
+    -fx-opacity: 1;
+}
+
+.scroll-bar > .increment-button,
+.scroll-bar > .decrement-button {
+    -fx-opacity: 0;
+}
+
+.button-add {
+    -fx-background-image: url("../Images/Other/add.png");
+    -fx-background-color: #2e3136;
+    -fx-background-radius: 24px;
+    -fx-pref-width: 48px;
+    -fx-pref-height: 48px;
+    -fx-effect: dropshadow(gaussian, #1e2124, 10, 0, 0, 2);
+    -fx-border-radius: 24px;
+    -fx-border-width: 1px;
+    -fx-border-color: #4f545c;
+}
+
+.button-add:hover {
+    -fx-background-color: #4f545c;
+}
+
+.button-edit {
+    -fx-background-image: url("../Images/Other/edit.png");
+    -fx-background-color: #2e3136;
+    -fx-background-radius: 5px;
+    -fx-pref-width: 36px;
+    -fx-pref-height: 36px;
+}
+
+.button-edit:hover {
+    -fx-background-color: #4f545c;
+}
+
+.button-delete {
+    -fx-background-image: url("../Images/Other/delete.png");
+    -fx-background-color: #2e3136;
+    -fx-background-radius: 5px;
+    -fx-pref-width: 36px;
+    -fx-pref-height: 36px;
+}
+
+.button-delete:hover {
+    -fx-background-color: #f04747;
+}

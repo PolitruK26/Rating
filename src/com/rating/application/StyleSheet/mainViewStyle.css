@@ -1,0 +1,134 @@
+* {
+    -border-color: #1c1e22;
+
+    -top-bar-color: #1e2124;
+
+    -bottom-bar-color: #282b30;
+    -bottom-bar-border: #1c1e22;
+
+    -tooltip-background-color: #7289da;
+
+    -top-bar-menu-button-text-fill: #afb0b2;
+    -top-bar-menu-button-hover-color: #2e3136;
+    -top-bar-menu-button-hover-text-fill: #aaabad;
+    -top-bar-menu-button-pressed-color: #FFF;
+    -top-bar-menu-button-pressed-text-fill: #36393e;
+
+    -left-menu-background-color: #2e3136;
+
+    -window-background-color: #36393e;
+}
+
+.background {
+    -fx-background-color: -window-background-color;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1;
+}
+
+.top-bar {
+    -fx-background-color: -top-bar-color;
+    -fx-pref-height: 48px;
+}
+
+.bottom-bar {
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: -bottom-bar-border;
+    -fx-pref-height: 24px;
+    -fx-background-color: -bottom-bar-color;
+}
+
+.button-resize {
+    -fx-pref-height: 24px;
+    -fx-pref-width: 24px;
+    -fx-cursor: se_resize;
+    -fx-background-color: transparent;
+    -fx-background-image: url("../Images/MainView/resize.png");
+    -fx-background-repeat: no-repeat;
+}
+
+.tooltip {
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-color: -tooltip-background-color;
+    -fx-background-radius: 5px;
+}
+
+.top-bar-menu {
+    -fx-background-color: transparent;
+    -fx-text-fill: -top-bar-menu-button-text-fill;
+}
+
+.top-bar-menu:hover {
+    -fx-background-color: -top-bar-menu-button-hover-color;
+    -fx-text-fill: -top-bar-menu-button-hover-text-fill;
+}
+
+.top-bar-menu:selected {
+    -fx-background-color: -top-bar-menu-button-pressed-color;
+    -fx-text-fill: -top-bar-menu-button-pressed-text-fill;
+}
+
+.button-close {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../Images/MainView/Close/close.png");
+    -fx-background-repeat: no-repeat;
+    -fx-pref-height: 48px;
+    -fx-pref-width: 36px;
+}
+
+.button-close:hover {
+    -fx-background-image: url("../Images/MainView/Close/close-hover.png");
+}
+
+.button-maximize {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../Images/MainView/Maximize/maximize.png");
+    -fx-background-repeat: no-repeat;
+    -fx-pref-height: 48px;
+    -fx-pref-width: 36px;
+}
+
+.button-maximize:hover {
+    -fx-background-image: url("../Images/MainView/Maximize/maximize-hover.png");
+}
+
+.button-maximize:selected {
+    -fx-background-image: url("../Images/MainView/Maximize/maximize-selected.png");
+}
+
+.button-maximize:selected:hover {
+    -fx-background-image: url("../Images/MainView/Maximize/maximize-selected-hover.png");
+}
+
+.button-minimize {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../Images/MainView/Minimize/minimize.png");
+    -fx-background-repeat: no-repeat;
+    -fx-pref-height: 48px;
+    -fx-pref-width: 36px;
+}
+
+.button-minimize:hover {
+    -fx-background-image: url("../Images/MainView/Minimize/minimize-hover.png");
+}
+
+.button-settings {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../Images/MainView/Settings/settings.png");
+    -fx-background-repeat: no-repeat;
+    -fx-pref-height: 48px;
+    -fx-pref-width: 36px;
+}
+
+.button-settings:hover {
+    -fx-background-image: url("../Images/MainView/Settings/settings-hover.png");
+}
+
+.button-settings:selected {
+    -fx-background-image: url("../Images/MainView/Settings/settings-hover.png");
+}
+
+.separator *.line  {
+    -fx-background-color: #47494e;
+    -fx-border-width: 0;
+}

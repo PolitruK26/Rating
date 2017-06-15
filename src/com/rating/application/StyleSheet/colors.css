@@ -1,0 +1,27 @@
+* {
+    /* обводка */
+    -border-color: red;
+
+    /* header */
+    -top-bar-color: #1e2124;
+
+    /* footer */
+    -bottom-bar-color: #282b30;
+    -bottom-bar-border: #1c1e22;
+
+    /* подсказка */
+    -tooltip-background-color: #7289da;
+
+    /* меню шапки */
+    -top-bar-menu-button-text-fill: #afb0b2;
+    -top-bar-menu-button-hover-color: #2e3136;
+    -top-bar-menu-button-hover-text-fill: #aaabad;
+    -top-bar-menu-button-pressed-color: #FFF;
+    -top-bar-menu-button-pressed-text-fill: #36393e;
+
+    /* меню списков */
+    -left-menu-background-color: #2e3136;
+
+    /* главное окно */
+    -window-background-color: red;
+}
