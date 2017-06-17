@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.ListSelectionView?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../../../StyleSheet/dialogStyle.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rating.application.Views.ListView.DialogViews.PublicationDialogViewController">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" styleClass="background" stylesheets="@../../../StyleSheet/dialogStyle.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rating.application.Views.ListView.DialogViews.PublicationDialogViewController">
    <children>
       <AnchorPane prefHeight="24.0" styleClass="top-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -50,7 +50,7 @@
                   </ComboBox>
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="300.0">
+            <VBox prefHeight="200.0" prefWidth="400.0">
                <children>
                   <ListSelectionView fx:id="authors" prefHeight="63.0" prefWidth="470.0">
                      <VBox.margin>

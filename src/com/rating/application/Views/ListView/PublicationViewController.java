@@ -57,8 +57,8 @@ public class PublicationViewController implements Initializable {
                 primaryStage.initModality(Modality.APPLICATION_MODAL);
                 primaryStage.initStyle(StageStyle.UNDECORATED);
                 Rectangle rectangle = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getBounds();
-                primaryStage.setX(rectangle.getWidth() / 2 - 150);
-                primaryStage.setY(rectangle.getHeight() / 2 - 215);
+                primaryStage.setX(rectangle.getWidth() / 2 - 350);
+                primaryStage.setY(rectangle.getHeight() / 2 - 200);
                 primaryStage.setTitle("Добавить публикацию");
                 primaryStage.setScene(new Scene(root));
                 primaryStage.showAndWait();
@@ -135,8 +135,8 @@ public class PublicationViewController implements Initializable {
                         primaryStage.initModality(Modality.APPLICATION_MODAL);
                         primaryStage.initStyle(StageStyle.UNDECORATED);
                         Rectangle rectangle = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getBounds();
-                        primaryStage.setX(rectangle.getWidth() / 2 - 200);
-                        primaryStage.setY(rectangle.getHeight() / 2 - 300);
+                        primaryStage.setX(rectangle.getWidth() / 2 - 350);
+                        primaryStage.setY(rectangle.getHeight() / 2 - 200);
                         primaryStage.setScene(new Scene(root));
                         primaryStage.showAndWait();
                         initData();
