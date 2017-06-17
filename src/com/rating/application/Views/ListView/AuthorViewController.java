@@ -152,6 +152,5 @@ public class AuthorViewController implements Initializable {
                 setGraphic(borderPane);
             }
         }
-
     }
 }
