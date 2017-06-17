@@ -55,7 +55,7 @@ public class AuthorEntity {
     public AuthorEntity() {
     }
 
-    public AuthorEntity(String secondName, String firstName, String middleName, String phone, String email, PositionAuthorEntity positionAuthorEntity, PowerAuthorEntity powerAuthorEntity, RankAuthorEntity rankAuthorEntity, Set<AuthorCertificateEntity> authorCertificateEntities, Set<AuthorPatentEntity> authorPatentEntities, Set<PublicationEntity> publicationEntities) {
+    public AuthorEntity(String secondName, String firstName, String middleName, String phone, String email, PositionAuthorEntity positionAuthorEntity, PowerAuthorEntity powerAuthorEntity, RankAuthorEntity rankAuthorEntity) {
         this.secondName = secondName;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -64,9 +64,6 @@ public class AuthorEntity {
         this.positionAuthorEntity = positionAuthorEntity;
         this.powerAuthorEntity = powerAuthorEntity;
         this.rankAuthorEntity = rankAuthorEntity;
-        this.authorCertificateEntities = authorCertificateEntities;
-        this.authorPatentEntities = authorPatentEntities;
-        this.publicationEntities = publicationEntities;
     }
 
     public Integer getId() {

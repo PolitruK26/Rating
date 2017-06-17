@@ -1,4 +1,6 @@
-/.idea
-/.git
-*config.properties
-/out
+/out/
+/.idea/
+/.gitignore
+/.gitattributes
+/config.properties
+/README.md
