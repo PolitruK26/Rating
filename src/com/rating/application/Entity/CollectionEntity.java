@@ -38,13 +38,12 @@ public class CollectionEntity {
     public CollectionEntity() {
     }
 
-    public CollectionEntity(String name, TypeCollectionEntity typeCollectionEntity, ThemeCollectionEntity themeCollectionEntity, ConferenceEntity conferenceEntity, EditionEntity editionEntity, Set<PublicationEntity> publicationEntities) {
+    public CollectionEntity(String name, TypeCollectionEntity typeCollectionEntity, ThemeCollectionEntity themeCollectionEntity, ConferenceEntity conferenceEntity, EditionEntity editionEntity) {
         this.name = name;
         this.typeCollectionEntity = typeCollectionEntity;
         this.themeCollectionEntity = themeCollectionEntity;
         this.conferenceEntity = conferenceEntity;
         this.editionEntity = editionEntity;
-        this.publicationEntities = publicationEntities;
     }
 
     public Integer getId() {

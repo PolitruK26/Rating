@@ -1,7 +1,23 @@
 package com.rating.application.DAO;
 
-/**
- * Created by Zver on 24.05.2017.
- */
-public class ThemeCollectionDAO {
+import com.rating.application.Entity.ThemeCollectionEntity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ThemeCollectionDAO extends DAO {
+
+    public List<ThemeCollectionEntity> getThemes() {
+        List<ThemeCollectionEntity> themeCollectionEntities = new ArrayList<ThemeCollectionEntity>();
+        try {
+            begin();
+            themeCollectionEntities = getSession().createQuery("from ThemeCollectionEntity").list();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return themeCollectionEntities;
+    }
+
 }

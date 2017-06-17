@@ -1,7 +1,23 @@
 package com.rating.application.DAO;
 
-/**
- * Created by Zver on 24.05.2017.
- */
-public class TypeCollectionDAO {
+import com.rating.application.Entity.TypeCollectionEntity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TypeCollectionDAO extends DAO {
+
+    public List<TypeCollectionEntity> getTypes() {
+        List<TypeCollectionEntity> typeCollectionEntities = new ArrayList<TypeCollectionEntity>();
+        try {
+            begin();
+            typeCollectionEntities = getSession().createQuery("from TypeCollectionEntity").list();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return typeCollectionEntities;
+    }
+
 }

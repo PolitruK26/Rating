@@ -22,17 +22,17 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <ComboBox fx:id="form" editable="true" focusTraversable="false" prefHeight="25.0" prefWidth="288.0" promptText="Форма">
+            <ComboBox fx:id="form" focusTraversable="false" prefHeight="25.0" prefWidth="288.0" promptText="Форма">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="level" editable="true" focusTraversable="false" prefHeight="25.0" prefWidth="288.0" promptText="Уровень">
+            <ComboBox fx:id="level" focusTraversable="false" prefHeight="25.0" prefWidth="288.0" promptText="Уровень">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="type" editable="true" focusTraversable="false" prefHeight="25.0" prefWidth="288.0" promptText="Тип">
+            <ComboBox fx:id="type" focusTraversable="false" prefHeight="25.0" prefWidth="288.0" promptText="Тип">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

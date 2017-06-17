@@ -38,6 +38,10 @@
     -fx-border-color: #1e2124;
 }
 
+.combo-box .cell {
+    -fx-text-fill: #a2a3a5;
+}
+
 .text-field, .combo-box {
     -fx-background-color: #282b30;
     -fx-background-radius: 5px;

@@ -22,22 +22,22 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <ComboBox fx:id="type" editable="true" focusTraversable="false" prefWidth="288.0" promptText="Тип">
+            <ComboBox fx:id="type" focusTraversable="false" prefWidth="288.0" promptText="Тип">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="theme" editable="true" focusTraversable="false" prefWidth="288.0" promptText="Тематика">
+            <ComboBox fx:id="theme" focusTraversable="false" prefWidth="288.0" promptText="Тематика">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="edition" editable="true" focusTraversable="false" prefWidth="288.0" promptText="Издание">
+            <ComboBox fx:id="edition" focusTraversable="false" prefWidth="288.0" promptText="Издание">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="conference" editable="true" focusTraversable="false" prefWidth="288.0" promptText="Конференция">
+            <ComboBox fx:id="conference" focusTraversable="false" prefWidth="288.0" promptText="Конференция">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

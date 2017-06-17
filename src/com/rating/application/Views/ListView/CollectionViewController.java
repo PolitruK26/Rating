@@ -1,13 +1,17 @@
 package com.rating.application.Views.ListView;
 
-import com.rating.application.Entity.CollectionEntity;
 import com.rating.application.DAO.CollectionDAO;
+import com.rating.application.Entity.CollectionEntity;
+import com.rating.application.Views.ListView.DialogViews.CollectionDialogViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -16,7 +20,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,6 +45,25 @@ public class CollectionViewController implements Initializable {
         listView.setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.F5)
                 initData();
+        });
+
+        buttonAdd.setOnMouseClicked(event -> {
+            try {
+                Stage primaryStage = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("DialogViews/collectionDialogView.fxml"));
+                primaryStage.initOwner(buttonAdd.getScene().getWindow());
+                primaryStage.initModality(Modality.APPLICATION_MODAL);
+                primaryStage.initStyle(StageStyle.UNDECORATED);
+                Rectangle rectangle = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getBounds();
+                primaryStage.setX(rectangle.getWidth() / 2 - 150);
+                primaryStage.setY(rectangle.getHeight() / 2 - 150);
+                primaryStage.setTitle("Добавить сборник");
+                primaryStage.setScene(new Scene(root));
+                primaryStage.showAndWait();
+                initData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
     }
@@ -84,9 +112,33 @@ public class CollectionViewController implements Initializable {
 
                 Button edit = new Button();
                 edit.getStyleClass().add("button-edit");
+                edit.setOnMouseClicked(event -> {
+                    try {
+                        Stage primaryStage = new Stage();
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DialogViews/collectionDialogView.fxml"));
+                        Parent root = fxmlLoader.load();
+                        fxmlLoader.<CollectionDialogViewController>getController().setEdit(item);
+                        primaryStage.initOwner(getScene().getWindow());
+                        primaryStage.initModality(Modality.APPLICATION_MODAL);
+                        primaryStage.initStyle(StageStyle.UNDECORATED);
+                        Rectangle rectangle = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getBounds();
+                        primaryStage.setX(rectangle.getWidth() / 2 - 150);
+                        primaryStage.setY(rectangle.getHeight() / 2 - 150);
+                        primaryStage.setScene(new Scene(root));
+                        primaryStage.showAndWait();
+                        initData();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
 
                 Button delete = new Button();
                 delete.getStyleClass().add("button-delete");
+                delete.setOnMouseClicked(event -> {
+                    CollectionDAO collectionDAO = new CollectionDAO();
+                    collectionDAO.deleteCollection(item);
+                    initData();
+                });
 
                 HBox buttons = new HBox(edit, delete);
                 buttons.setAlignment(Pos.CENTER);

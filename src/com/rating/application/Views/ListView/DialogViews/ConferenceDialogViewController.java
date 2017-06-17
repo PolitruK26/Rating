@@ -103,7 +103,6 @@ public class ConferenceDialogViewController implements Initializable {
                 return entity;
             }
         });
-        TextFields.bindAutoCompletion(form.getEditor(), conferenceEntities.toArray()).setDelay(0);
 
         Collection<LevelConferenceEntity> levelConferenceEntities = FXCollections.observableArrayList(new LevelConferenceDAO().getLevels());
         level.getItems().addAll(levelConferenceEntities);
@@ -126,7 +125,6 @@ public class ConferenceDialogViewController implements Initializable {
                 return entity;
             }
         });
-        TextFields.bindAutoCompletion(level.getEditor(), levelConferenceEntities.toArray()).setDelay(0);
 
         Collection<TypeConferenceEntity> typeConferenceEntities = FXCollections.observableArrayList(new TypeConferenceDAO().getTypes());
         type.getItems().addAll(typeConferenceEntities);
@@ -149,7 +147,6 @@ public class ConferenceDialogViewController implements Initializable {
                 return entity;
             }
         });
-        TextFields.bindAutoCompletion(type.getEditor(), typeConferenceEntities.toArray()).setDelay(0);
 
         accept.setOnMouseClicked(event -> {
 
