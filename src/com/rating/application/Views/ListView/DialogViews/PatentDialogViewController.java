@@ -53,7 +53,6 @@ public class PatentDialogViewController implements Initializable {
     private Boolean isEdit = false;
 
     private Integer id;
-    private List<AuthorPatentEntity> many = FXCollections.observableArrayList();
 
     private double initialX;
     private double initialY;
@@ -207,7 +206,6 @@ public class PatentDialogViewController implements Initializable {
             authors.getTargetItems().add(authorPatentEntity.getAuthorEntity());
             if (authorPatentEntity.getHolder() == new Integer(1).byteValue())
                 holder.getCheckModel().check(authorPatentEntity.getAuthorEntity());
-            this.many.add(authorPatentEntity);
         }
         for (AuthorPatentEntity authorPatentEntity : patentEntity.getAuthorPatentEntities()) {
             if (authorPatentEntity.getHolder() == new Integer(1).byteValue())

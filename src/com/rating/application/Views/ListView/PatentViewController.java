@@ -58,7 +58,7 @@ public class PatentViewController implements Initializable {
                 Rectangle rectangle = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getBounds();
                 primaryStage.setX(rectangle.getWidth() / 2 - 350);
                 primaryStage.setY(rectangle.getHeight() / 2 - 210);
-                primaryStage.setTitle("Добавить конференцию");
+                primaryStage.setTitle("Добавить патент");
                 primaryStage.setScene(new Scene(root));
                 primaryStage.showAndWait();
                 initData();

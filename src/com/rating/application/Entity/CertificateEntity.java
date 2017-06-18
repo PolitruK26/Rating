@@ -26,13 +26,13 @@ public class CertificateEntity {
     @JoinColumn(name = "ID_type_certificate")
     private TypeCertificateEntity typeCertificateEntity;
 
-    @OneToMany(mappedBy = "certificateEntity", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "certificateEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<AuthorCertificateEntity> authorCertificateEntities = new HashSet<AuthorCertificateEntity>();
 
     public CertificateEntity() {
     }
 
-    public CertificateEntity(String name, String number, Integer year, TypeCertificateEntity typeCertificateEntity, Set<AuthorCertificateEntity> authorCertificateEntities) {
+    public CertificateEntity(String name, String number, Integer year, TypeCertificateEntity typeCertificateEntity) {
         this.name = name;
         this.number = number;
         this.year = year;
