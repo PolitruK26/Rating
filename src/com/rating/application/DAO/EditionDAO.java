@@ -11,7 +11,7 @@ public class EditionDAO extends DAO {
         List<EditionEntity> editionEntities = new ArrayList<EditionEntity>();
         try {
             begin();
-            editionEntities = getSession().createQuery("from EditionEntity").list();
+            editionEntities = getSession().createQuery("from EditionEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

@@ -11,7 +11,7 @@ public class TypeConferenceDAO extends DAO {
         List<TypeConferenceEntity> typeConferenceEntities = new ArrayList<TypeConferenceEntity>();
         try {
             begin();
-            typeConferenceEntities = getSession().createQuery("from TypeConferenceEntity").list();
+            typeConferenceEntities = getSession().createQuery("from TypeConferenceEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

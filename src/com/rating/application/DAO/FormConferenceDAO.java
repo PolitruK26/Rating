@@ -11,7 +11,7 @@ public class FormConferenceDAO extends DAO {
         List<FormConferenceEntity> formConferenceEntities = new ArrayList<FormConferenceEntity>();
         try {
             begin();
-            formConferenceEntities = getSession().createQuery("from FormConferenceEntity").list();
+            formConferenceEntities = getSession().createQuery("from FormConferenceEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

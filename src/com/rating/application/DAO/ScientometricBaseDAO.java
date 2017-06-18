@@ -11,7 +11,7 @@ public class ScientometricBaseDAO extends DAO {
         List<ScientometricBaseEntity> scientometricBaseEntities = new ArrayList<ScientometricBaseEntity>();
         try {
             begin();
-            scientometricBaseEntities = getSession().createQuery("from ScientometricBaseEntity").list();
+            scientometricBaseEntities = getSession().createQuery("from ScientometricBaseEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

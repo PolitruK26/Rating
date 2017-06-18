@@ -11,7 +11,7 @@ public class TypeCollectionDAO extends DAO {
         List<TypeCollectionEntity> typeCollectionEntities = new ArrayList<TypeCollectionEntity>();
         try {
             begin();
-            typeCollectionEntities = getSession().createQuery("from TypeCollectionEntity").list();
+            typeCollectionEntities = getSession().createQuery("from TypeCollectionEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

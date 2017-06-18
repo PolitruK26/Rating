@@ -1,9 +1,10 @@
 package com.rating.application.Views.ListView;
 
+import com.rating.application.DAO.CollectionDAO;
 import com.rating.application.DAO.PublicationDAO;
-import com.rating.application.Entity.AuthorEntity;
-import com.rating.application.Entity.KeywordsEntity;
-import com.rating.application.Entity.PublicationEntity;
+import com.rating.application.DAO.ScientometricBaseDAO;
+import com.rating.application.DAO.TypePublicationDAO;
+import com.rating.application.Entity.*;
 import com.rating.application.Views.ListView.DialogViews.PublicationDialogViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,23 +16,31 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.StringConverter;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class PublicationViewController implements Initializable {
+
+    @FXML
+    private AnchorPane window;
 
     @FXML
     private Button buttonAdd;
@@ -39,8 +48,155 @@ public class PublicationViewController implements Initializable {
     @FXML
     private ListView<PublicationEntity> listView;
 
+    @FXML
+    private ComboBox<TypePublicationEntity> type;
+
+    @FXML
+    private ComboBox<CollectionEntity> collection;
+
+    @FXML
+    private ComboBox<Integer> year;
+
+    @FXML
+    private ComboBox<ScientometricBaseEntity> base;
+
+    @FXML
+    private Button clear;
+
+    private TextField search;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        clear.setOnAction(event -> {
+            type.getSelectionModel().clearSelection();
+            collection.getSelectionModel().clearSelection();
+            year.getSelectionModel().clearSelection();
+            base.getSelectionModel().clearSelection();
+        });
+
+        Collection<TypePublicationEntity> typePublicationEntities = FXCollections.observableArrayList(new TypePublicationDAO().getTypes());
+        type.getItems().addAll(typePublicationEntities);
+        type.setConverter(new StringConverter<TypePublicationEntity>() {
+            @Override
+            public String toString(TypePublicationEntity object) {
+                if (object != null)
+                    return object.getName();
+                else
+                    return null;
+            }
+
+            @Override
+            public TypePublicationEntity fromString(String string) {
+                TypePublicationEntity entity = new TypePublicationEntity();
+                for (TypePublicationEntity typePublicationEntity : typePublicationEntities) {
+                    if (Objects.equals(typePublicationEntity.getName(), type.getEditor().getText()))
+                        entity = typePublicationEntity;
+                }
+                return entity;
+            }
+        });
+        type.valueProperty().addListener((observable, oldValue, newValue) -> {
+            PublicationDAO publicationDAO = new PublicationDAO();
+            ObservableList<PublicationEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(publicationDAO.getFiltredPublications(search.getText(), type.getValue(), collection.getValue(), year.getValue(), base.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new PublicationCell());
+        });
+
+        Collection<CollectionEntity> collectionEntities = FXCollections.observableArrayList(new CollectionDAO().getCollections());
+        collection.getItems().addAll(collectionEntities);
+        collection.setConverter(new StringConverter<CollectionEntity>() {
+            @Override
+            public String toString(CollectionEntity object) {
+                if (object != null)
+                    return object.getName();
+                else
+                    return null;
+            }
+
+            @Override
+            public CollectionEntity fromString(String string) {
+                CollectionEntity entity = new CollectionEntity();
+                for (CollectionEntity collectionEntity : collectionEntities) {
+                    if (Objects.equals(collectionEntity.getName(), collection.getEditor().getText()))
+                        entity = collectionEntity;
+                }
+                return entity;
+            }
+        });
+        collection.valueProperty().addListener((observable, oldValue, newValue) -> {
+            PublicationDAO publicationDAO = new PublicationDAO();
+            ObservableList<PublicationEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(publicationDAO.getFiltredPublications(search.getText(), type.getValue(), collection.getValue(), year.getValue(), base.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new PublicationCell());
+        });
+
+        for (int i = 1980; i <= 2070; i++)
+            year.getItems().add(i);
+        year.valueProperty().addListener((observable, oldValue, newValue) -> {
+            PublicationDAO publicationDAO = new PublicationDAO();
+            ObservableList<PublicationEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(publicationDAO.getFiltredPublications(search.getText(), type.getValue(), collection.getValue(), year.getValue(), base.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new PublicationCell());
+        });
+
+        Collection<ScientometricBaseEntity> scientometricBaseEntities = FXCollections.observableArrayList(new ScientometricBaseDAO().getBases());
+        base.getItems().addAll(scientometricBaseEntities);
+        base.setConverter(new StringConverter<ScientometricBaseEntity>() {
+            @Override
+            public String toString(ScientometricBaseEntity object) {
+                if (object != null)
+                    return object.getName();
+                else
+                    return null;
+            }
+
+            @Override
+            public ScientometricBaseEntity fromString(String string) {
+                ScientometricBaseEntity entity = new ScientometricBaseEntity();
+                for (ScientometricBaseEntity scientometricBaseEntity : scientometricBaseEntities) {
+                    if (Objects.equals(scientometricBaseEntity.getName(), base.getEditor().getText()))
+                        entity = scientometricBaseEntity;
+                }
+                return entity;
+            }
+        });
+        base.valueProperty().addListener((observable, oldValue, newValue) -> {
+            PublicationDAO publicationDAO = new PublicationDAO();
+            ObservableList<PublicationEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(publicationDAO.getFiltredPublications(search.getText(), type.getValue(), collection.getValue(), year.getValue(), base.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new PublicationCell());
+        });
+
+        search = TextFields.createClearableTextField();
+        window.getChildren().add(search);
+        search.setPrefHeight(30);
+        search.setFocusTraversable(false);
+        AnchorPane.setTopAnchor(search, 5.0);
+        AnchorPane.setRightAnchor(search, 10.0);
+        AnchorPane.setLeftAnchor(search, 10.0);
+        search.setPromptText("Поиск по названию");
+        search.textProperty().addListener((observable, oldValue, newValue) -> {
+            PublicationDAO publicationDAO = new PublicationDAO();
+            ObservableList<PublicationEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(publicationDAO.getFiltredPublications(search.getText(), type.getValue(), collection.getValue(), year.getValue(), base.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new PublicationCell());
+        });
 
         initData();
 
@@ -119,7 +275,8 @@ public class PublicationViewController implements Initializable {
                         top,
                         name,
                         authors,
-                        new Label("Опубликованно в \"" + item.getCollectionEntity().getName() + "\"")
+                        new Label("Опубликованно в сборнике \"" + item.getCollectionEntity().getName() + "\""),
+                        new Label("Публикация размещена в " + item.getScientometricBaseEntity().getName())
                 );
                 name.prefWidthProperty().bind(center.widthProperty());
 

@@ -11,7 +11,7 @@ public class RegistrationPlaceDAO extends DAO {
         List<RegistrationPlaceEntity> registrationPlaceEntities = new ArrayList<RegistrationPlaceEntity>();
         try {
             begin();
-            registrationPlaceEntities = getSession().createQuery("from RegistrationPlaceEntity").list();
+            registrationPlaceEntities = getSession().createQuery("from RegistrationPlaceEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

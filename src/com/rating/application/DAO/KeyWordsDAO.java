@@ -12,7 +12,7 @@ public class KeyWordsDAO extends DAO {
         List<KeywordsEntity> keywordsEntities = new ArrayList<KeywordsEntity>();
         try {
             begin();
-            keywordsEntities = getSession().createQuery("from KeywordsEntity").list();
+            keywordsEntities = getSession().createQuery("from KeywordsEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

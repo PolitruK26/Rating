@@ -1,8 +1,12 @@
 package com.rating.application.Views.ListView;
 
 import com.rating.application.DAO.PatentDAO;
+import com.rating.application.DAO.RegistrationPlaceDAO;
+import com.rating.application.DAO.TypePatentDAO;
 import com.rating.application.Entity.AuthorPatentEntity;
 import com.rating.application.Entity.PatentEntity;
+import com.rating.application.Entity.RegistrationPlaceEntity;
+import com.rating.application.Entity.TypePatentEntity;
 import com.rating.application.Views.ListView.DialogViews.PatentDialogViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,23 +18,31 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.StringConverter;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class PatentViewController implements Initializable {
+
+    @FXML
+    private AnchorPane window;
 
     @FXML
     private Button buttonAdd;
@@ -38,8 +50,120 @@ public class PatentViewController implements Initializable {
     @FXML
     private ListView<PatentEntity> listView;
 
+    @FXML
+    private ComboBox<TypePatentEntity> type;
+
+    @FXML
+    private ComboBox<Integer> year;
+
+    @FXML
+    private ComboBox<RegistrationPlaceEntity> place;
+
+    @FXML
+    private Button clear;
+
+    private TextField search;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        clear.setOnAction(event -> {
+            type.getSelectionModel().clearSelection();
+            year.getSelectionModel().clearSelection();
+            place.getSelectionModel().clearSelection();
+        });
+
+        Collection<TypePatentEntity> typePatentEntities = FXCollections.observableArrayList(new TypePatentDAO().getTypes());
+        type.getItems().addAll(typePatentEntities);
+        type.setConverter(new StringConverter<TypePatentEntity>() {
+            @Override
+            public String toString(TypePatentEntity object) {
+                if (object != null)
+                    return object.getName();
+                else
+                    return null;
+            }
+
+            @Override
+            public TypePatentEntity fromString(String string) {
+                TypePatentEntity entity = new TypePatentEntity();
+                for (TypePatentEntity typePatentEntity : typePatentEntities) {
+                    if (Objects.equals(typePatentEntity.getName(), type.getEditor().getText()))
+                        entity = typePatentEntity;
+                }
+                return entity;
+            }
+        });
+        type.valueProperty().addListener((observable, oldValue, newValue) -> {
+            PatentDAO patentDAO = new PatentDAO();
+            ObservableList<PatentEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(patentDAO.getFiltredPatents(search.getText(), type.getValue(), year.getValue(), place.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new PatentCell());
+        });
+
+        for (int i = 1980; i <= 2070; i++)
+            year.getItems().add(i);
+        year.valueProperty().addListener((observable, oldValue, newValue) -> {
+            PatentDAO patentDAO = new PatentDAO();
+            ObservableList<PatentEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(patentDAO.getFiltredPatents(search.getText(), type.getValue(), year.getValue(), place.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new PatentCell());
+        });
+
+        Collection<RegistrationPlaceEntity> registrationPlaceEntities = FXCollections.observableArrayList(new RegistrationPlaceDAO().getPlaces());
+        place.getItems().addAll(registrationPlaceEntities);
+        place.setConverter(new StringConverter<RegistrationPlaceEntity>() {
+            @Override
+            public String toString(RegistrationPlaceEntity object) {
+                if (object != null)
+                    return object.getName();
+                else
+                    return null;
+            }
+
+            @Override
+            public RegistrationPlaceEntity fromString(String string) {
+                RegistrationPlaceEntity entity = new RegistrationPlaceEntity();
+                for (RegistrationPlaceEntity registrationPlaceEntity : registrationPlaceEntities) {
+                    if (Objects.equals(registrationPlaceEntity.getName(), place.getEditor().getText()))
+                        entity = registrationPlaceEntity;
+                }
+                return entity;
+            }
+        });
+        place.valueProperty().addListener((observable, oldValue, newValue) -> {
+            PatentDAO patentDAO = new PatentDAO();
+            ObservableList<PatentEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(patentDAO.getFiltredPatents(search.getText(), type.getValue(), year.getValue(), place.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new PatentCell());
+        });
+
+        search = TextFields.createClearableTextField();
+        window.getChildren().add(search);
+        search.setPrefHeight(30);
+        search.setFocusTraversable(false);
+        AnchorPane.setTopAnchor(search, 5.0);
+        AnchorPane.setRightAnchor(search, 10.0);
+        AnchorPane.setLeftAnchor(search, 10.0);
+        search.setPromptText("Поиск по названию");
+        search.textProperty().addListener((observable, oldValue, newValue) -> {
+            PatentDAO patentDAO = new PatentDAO();
+            ObservableList<PatentEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(patentDAO.getFiltredPatents(search.getText(), type.getValue(), year.getValue(), place.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new PatentCell());
+        });
 
         initData();
 

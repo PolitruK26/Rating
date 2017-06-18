@@ -11,7 +11,7 @@ public class ThemeCollectionDAO extends DAO {
         List<ThemeCollectionEntity> themeCollectionEntities = new ArrayList<ThemeCollectionEntity>();
         try {
             begin();
-            themeCollectionEntities = getSession().createQuery("from ThemeCollectionEntity").list();
+            themeCollectionEntities = getSession().createQuery("from ThemeCollectionEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

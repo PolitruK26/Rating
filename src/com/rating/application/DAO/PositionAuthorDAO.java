@@ -11,7 +11,7 @@ public class PositionAuthorDAO extends DAO {
         List<PositionAuthorEntity> positionAuthorEntities = new ArrayList<PositionAuthorEntity>();
         try {
             begin();
-            positionAuthorEntities = getSession().createQuery("from PositionAuthorEntity").list();
+            positionAuthorEntities = getSession().createQuery("from PositionAuthorEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

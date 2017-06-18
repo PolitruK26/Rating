@@ -11,7 +11,7 @@ public class TypePatentDAO extends DAO {
         List<TypePatentEntity> typePatentEntities = new ArrayList<TypePatentEntity>();
         try {
             begin();
-            typePatentEntities = getSession().createQuery("from TypePatentEntity").list();
+            typePatentEntities = getSession().createQuery("from TypePatentEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

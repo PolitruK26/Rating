@@ -11,7 +11,7 @@ public class TypePublicationDAO extends DAO {
         List<TypePublicationEntity> typePublicationEntities = new ArrayList<TypePublicationEntity>();
         try {
             begin();
-            typePublicationEntities = getSession().createQuery("from TypePublicationEntity").list();
+            typePublicationEntities = getSession().createQuery("from TypePublicationEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

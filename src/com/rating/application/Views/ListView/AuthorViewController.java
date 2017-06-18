@@ -1,7 +1,13 @@
 package com.rating.application.Views.ListView;
 
 import com.rating.application.DAO.AuthorDAO;
+import com.rating.application.DAO.PositionAuthorDAO;
+import com.rating.application.DAO.PowerAuthorDAO;
+import com.rating.application.DAO.RankAuthorDAO;
 import com.rating.application.Entity.AuthorEntity;
+import com.rating.application.Entity.PositionAuthorEntity;
+import com.rating.application.Entity.PowerAuthorEntity;
+import com.rating.application.Entity.RankAuthorEntity;
 import com.rating.application.Views.ListView.DialogViews.AuthorDialogViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,23 +19,31 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.StringConverter;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AuthorViewController implements Initializable {
+
+    @FXML
+    private AnchorPane window;
 
     @FXML
     private Button buttonAdd;
@@ -37,8 +51,139 @@ public class AuthorViewController implements Initializable {
     @FXML
     private ListView<AuthorEntity> listView;
 
+    @FXML
+    private ComboBox<PositionAuthorEntity> position;
+
+    @FXML
+    private ComboBox<PowerAuthorEntity> power;
+
+    @FXML
+    private ComboBox<RankAuthorEntity> rank;
+
+    @FXML
+    private Button clear;
+
+    private TextField search;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        clear.setOnAction(event -> {
+            position.getSelectionModel().clearSelection();
+            power.getSelectionModel().clearSelection();
+            rank.getSelectionModel().clearSelection();
+        });
+
+        Collection<PositionAuthorEntity> positionAuthorEntities = FXCollections.observableArrayList(new PositionAuthorDAO().getPosotions());
+        position.getItems().addAll(positionAuthorEntities);
+        position.setConverter(new StringConverter<PositionAuthorEntity>() {
+            @Override
+            public String toString(PositionAuthorEntity object) {
+                if (object != null)
+                    return object.getName();
+                else
+                    return null;
+            }
+
+            @Override
+            public PositionAuthorEntity fromString(String string) {
+                PositionAuthorEntity entity = new PositionAuthorEntity();
+                for (PositionAuthorEntity positionAuthorEntity : positionAuthorEntities) {
+                    if (Objects.equals(positionAuthorEntity.getName(), position.getEditor().getText()))
+                        entity = positionAuthorEntity;
+                }
+                return entity;
+            }
+        });
+        position.valueProperty().addListener((observable, oldValue, newValue) -> {
+            AuthorDAO authorDAO = new AuthorDAO();
+            ObservableList<AuthorEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(authorDAO.getFiltredAuthors(search.getText(), position.getValue(), power.getValue(), rank.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new AuthorCell());
+        });
+
+        Collection<PowerAuthorEntity> powerAuthorEntities = FXCollections.observableArrayList(new PowerAuthorDAO().getPowers());
+        power.getItems().addAll(powerAuthorEntities);
+        power.setConverter(new StringConverter<PowerAuthorEntity>() {
+            @Override
+            public String toString(PowerAuthorEntity object) {
+                if (object != null)
+                    return object.getName();
+                else
+                    return null;
+            }
+
+            @Override
+            public PowerAuthorEntity fromString(String string) {
+                PowerAuthorEntity entity = new PowerAuthorEntity();
+                for (PowerAuthorEntity powerAuthorEntity : powerAuthorEntities) {
+                    if (Objects.equals(powerAuthorEntity.getName(), power.getEditor().getText()))
+                        entity = powerAuthorEntity;
+                }
+                return entity;
+            }
+        });
+        power.valueProperty().addListener((observable, oldValue, newValue) -> {
+            AuthorDAO authorDAO = new AuthorDAO();
+            ObservableList<AuthorEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(authorDAO.getFiltredAuthors(search.getText(), position.getValue(), power.getValue(), rank.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new AuthorCell());
+        });
+
+        Collection<RankAuthorEntity> rankAuthorEntities = FXCollections.observableArrayList(new RankAuthorDAO().getRanks());
+        rank.getItems().addAll(rankAuthorEntities);
+        rank.setConverter(new StringConverter<RankAuthorEntity>() {
+            @Override
+            public String toString(RankAuthorEntity object) {
+                if (object != null)
+                    return object.getName();
+                else
+                    return null;
+            }
+
+            @Override
+            public RankAuthorEntity fromString(String string) {
+                RankAuthorEntity entity = new RankAuthorEntity();
+                for (RankAuthorEntity rankAuthorEntity : rankAuthorEntities) {
+                    if (Objects.equals(rankAuthorEntity.getName(), rank.getEditor().getText()))
+                        entity = rankAuthorEntity;
+                }
+                return entity;
+            }
+        });
+        rank.valueProperty().addListener((observable, oldValue, newValue) -> {
+            AuthorDAO authorDAO = new AuthorDAO();
+            ObservableList<AuthorEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(authorDAO.getFiltredAuthors(search.getText(), position.getValue(), power.getValue(), rank.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new AuthorCell());
+        });
+
+        search = TextFields.createClearableTextField();
+        window.getChildren().add(search);
+        search.setPrefHeight(30);
+        search.setFocusTraversable(false);
+        AnchorPane.setTopAnchor(search, 5.0);
+        AnchorPane.setRightAnchor(search, 10.0);
+        AnchorPane.setLeftAnchor(search, 10.0);
+        search.setPromptText("Поиск по фамилии");
+        search.textProperty().addListener((observable, oldValue, newValue) -> {
+            AuthorDAO authorDAO = new AuthorDAO();
+            ObservableList<AuthorEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(authorDAO.getFiltredAuthors(search.getText(), position.getValue(), power.getValue(), rank.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new AuthorCell());
+        });
 
         initData();
 

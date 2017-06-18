@@ -11,7 +11,7 @@ public class RankAuthorDAO extends DAO {
         List<RankAuthorEntity> rankAuthorEntities = new ArrayList<RankAuthorEntity>();
         try {
             begin();
-            rankAuthorEntities = getSession().createQuery("from RankAuthorEntity").list();
+            rankAuthorEntities = getSession().createQuery("from RankAuthorEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

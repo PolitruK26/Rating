@@ -1,8 +1,10 @@
 package com.rating.application.Views.ListView;
 
 import com.rating.application.DAO.CertificateDAO;
+import com.rating.application.DAO.TypeCertificateDAO;
 import com.rating.application.Entity.AuthorCertificateEntity;
 import com.rating.application.Entity.CertificateEntity;
+import com.rating.application.Entity.TypeCertificateEntity;
 import com.rating.application.Views.ListView.DialogViews.CertificateDialogViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,23 +16,31 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.StringConverter;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CertificateViewController implements Initializable {
+
+    @FXML
+    private AnchorPane window;
 
     @FXML
     private Button buttonAdd;
@@ -38,8 +48,85 @@ public class CertificateViewController implements Initializable {
     @FXML
     private ListView<CertificateEntity> listView;
 
+    @FXML
+    private ComboBox<TypeCertificateEntity> type;
+
+    @FXML
+    private ComboBox<Integer> year;
+
+    @FXML
+    private Button clear;
+
+    private TextField search;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        clear.setOnAction(event -> {
+            type.getSelectionModel().clearSelection();
+            year.getSelectionModel().clearSelection();
+        });
+
+        Collection<TypeCertificateEntity> typeCertificateEntities = FXCollections.observableArrayList(new TypeCertificateDAO().getTypes());
+        type.getItems().addAll(typeCertificateEntities);
+        type.setConverter(new StringConverter<TypeCertificateEntity>() {
+            @Override
+            public String toString(TypeCertificateEntity object) {
+                if (object != null)
+                    return object.getName();
+                else
+                    return null;
+            }
+
+            @Override
+            public TypeCertificateEntity fromString(String string) {
+                TypeCertificateEntity entity = new TypeCertificateEntity();
+                for (TypeCertificateEntity typeCertificateEntity : typeCertificateEntities) {
+                    if (Objects.equals(typeCertificateEntity.getName(), type.getEditor().getText()))
+                        entity = typeCertificateEntity;
+                }
+                return entity;
+            }
+        });
+        type.valueProperty().addListener((observable, oldValue, newValue) -> {
+            CertificateDAO certificateDAO = new CertificateDAO();
+            ObservableList<CertificateEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(certificateDAO.getFiltredCertificates(search.getText(), type.getValue(), year.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new CertificateCell());
+        });
+
+        for (int i = 1980; i <= 2070; i++)
+            year.getItems().add(i);
+        year.valueProperty().addListener((observable, oldValue, newValue) -> {
+            CertificateDAO certificateDAO = new CertificateDAO();
+            ObservableList<CertificateEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(certificateDAO.getFiltredCertificates(search.getText(), type.getValue(), year.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new CertificateCell());
+        });
+
+        search = TextFields.createClearableTextField();
+        window.getChildren().add(search);
+        search.setPrefHeight(30);
+        search.setFocusTraversable(false);
+        AnchorPane.setTopAnchor(search, 5.0);
+        AnchorPane.setRightAnchor(search, 10.0);
+        AnchorPane.setLeftAnchor(search, 10.0);
+        search.setPromptText("Поиск по названию");
+        search.textProperty().addListener((observable, oldValue, newValue) -> {
+            CertificateDAO certificateDAO = new CertificateDAO();
+            ObservableList<CertificateEntity> observableList = FXCollections.observableArrayList();
+            observableList.clear();
+            observableList.addAll(certificateDAO.getFiltredCertificates(search.getText(), type.getValue(), year.getValue()));
+            listView.getItems().clear();
+            listView.setItems(observableList);
+            listView.setCellFactory(list -> new CertificateCell());
+        });
 
         initData();
 

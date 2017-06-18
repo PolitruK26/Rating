@@ -11,7 +11,7 @@ public class TypeCertificateDAO extends DAO {
         List<TypeCertificateEntity> typeCertificateEntities = new ArrayList<TypeCertificateEntity>();
         try {
             begin();
-            typeCertificateEntities = getSession().createQuery("from TypeCertificateEntity").list();
+            typeCertificateEntities = getSession().createQuery("from TypeCertificateEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

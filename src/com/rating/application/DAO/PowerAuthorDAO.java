@@ -11,7 +11,7 @@ public class PowerAuthorDAO extends DAO {
         List<PowerAuthorEntity> powerAuthorEntities = new ArrayList<PowerAuthorEntity>();
         try {
             begin();
-            powerAuthorEntities = getSession().createQuery("from PowerAuthorEntity").list();
+            powerAuthorEntities = getSession().createQuery("from PowerAuthorEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

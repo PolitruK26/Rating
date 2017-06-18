@@ -11,7 +11,7 @@ public class LevelConferenceDAO extends DAO {
         List<LevelConferenceEntity> levelConferenceEntities = new ArrayList<LevelConferenceEntity>();
         try {
             begin();
-            levelConferenceEntities = getSession().createQuery("from LevelConferenceEntity").list();
+            levelConferenceEntities = getSession().createQuery("from LevelConferenceEntity order by name").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
