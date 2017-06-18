@@ -1,17 +1,21 @@
 package com.rating.application.DAO;
 
+import com.rating.application.Entity.AuthorPatentEntity;
 import com.rating.application.Entity.PatentEntity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class PatentDAO extends DAO {
 
-    public void addPatent(PatentEntity patentEntity) {
+    public void addPatent(PatentEntity patentEntity, Collection<AuthorPatentEntity> authorPatentEntities) {
 
         try {
             begin();
             getSession().save(patentEntity);
+            for (AuthorPatentEntity authorPatentEntity : authorPatentEntities)
+                getSession().save(authorPatentEntity);
             commit();
         } catch (RuntimeException e) {
             rollback();
@@ -22,11 +26,14 @@ public class PatentDAO extends DAO {
 
     }
 
-    public void updatePatent(PatentEntity patentEntity) {
+    public void updatePatent(PatentEntity patentEntity, Collection<AuthorPatentEntity> authorPatentEntities) {
 
         try {
             begin();
-            getSession().update(patentEntity);
+            getSession().save(patentEntity);
+            for (AuthorPatentEntity authorPatentEntity : authorPatentEntities) {
+                getSession().save(authorPatentEntity);
+            }
             commit();
         } catch (RuntimeException e) {
             rollback();
@@ -42,6 +49,21 @@ public class PatentDAO extends DAO {
         try {
             begin();
             getSession().delete(patentEntity);
+            commit();
+        } catch (RuntimeException e) {
+            rollback();
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+    }
+
+    public void deletePatentById(Integer id) {
+
+        try {
+            begin();
+            getSession().delete(getSession().get(PatentEntity.class, id));
             commit();
         } catch (RuntimeException e) {
             rollback();

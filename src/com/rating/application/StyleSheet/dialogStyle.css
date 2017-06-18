@@ -182,3 +182,14 @@
 .list-view .list-cell:selected {
     -fx-text-fill: #FFFFFF;
 }
+
+.check-box .box {
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-border-color: #72767d;
+    -fx-background-color: transparent;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #FFFFFF;
+}

@@ -30,19 +30,18 @@ public class PatentEntity {
     @JoinColumn(name = "ID_registration_place")
     private RegistrationPlaceEntity registrationPlaceEntity;
 
-    @OneToMany(mappedBy = "patentEntity", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patentEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<AuthorPatentEntity> authorPatentEntities = new HashSet<AuthorPatentEntity>();
 
     public PatentEntity() {
     }
 
-    public PatentEntity(String name, String number, Integer year, TypePatentEntity typePatentEntity, RegistrationPlaceEntity registrationPlaceEntity, Set<AuthorPatentEntity> authorPatentEntities) {
+    public PatentEntity(String name, String number, Integer year, TypePatentEntity typePatentEntity, RegistrationPlaceEntity registrationPlaceEntity) {
         this.name = name;
         this.number = number;
         this.year = year;
         this.typePatentEntity = typePatentEntity;
         this.registrationPlaceEntity = registrationPlaceEntity;
-        this.authorPatentEntities = authorPatentEntities;
     }
 
     public Integer getId() {

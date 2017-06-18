@@ -162,4 +162,8 @@ public class AuthorEntity {
         this.publicationEntities = publicationEntities;
     }
 
+    @Override
+    public String toString() {
+        return secondName + ' ' + firstName + '.' + middleName + '.';
+    }
 }
