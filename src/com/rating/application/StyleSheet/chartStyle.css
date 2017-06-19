@@ -102,7 +102,7 @@
 }
 
 .axis {
-    -fx-font-size: 14px;
+    -fx-tick-label-font-size: 14px;
     -fx-tick-label-fill: -top-bar-menu-button-text-fill;
 }
 
@@ -114,8 +114,9 @@
     -fx-bar-fill: -tooltip-background-color;
 }
 
-.chart-pie-label { /*this is what you need for labels*/
+.chart-pie-label {
     -fx-fill: #afb0b2;
+    -fx-font-size: 14px;
 }
 
 .menu-item .label, .combo-box-popup .list-view .list-cell {

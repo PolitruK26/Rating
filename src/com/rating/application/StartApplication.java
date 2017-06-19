@@ -34,6 +34,7 @@ public class StartApplication extends Application {
             config.createNewFile();
             Properties properties = new Properties();
             properties.setProperty("system.window", "false");
+            properties.setProperty("rating.down", "50%");
             properties.setProperty("rating.level.international", "0");
             properties.setProperty("rating.level.allrussian", "0");
             properties.setProperty("rating.level.regionalbig", "0");

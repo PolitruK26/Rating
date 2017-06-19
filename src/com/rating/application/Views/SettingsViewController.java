@@ -3,12 +3,19 @@ package com.rating.application.Views;
 import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,6 +63,8 @@ public class SettingsViewController implements Initializable {
     private JFXTextField tcDB = new JFXTextField();
     private JFXTextField tcComputer = new JFXTextField();
 
+    private JFXTextField year = new JFXTextField();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -82,10 +91,54 @@ public class SettingsViewController implements Initializable {
         });
         Label generalLabel = new Label("Настройки приложения:");
         generalLabel.getStyleClass().add("label-big");
+        Button plus = new Button("+");
+        plus.setPrefHeight(25);
+        plus.setPrefWidth(25);
+        plus.setOnAction(event -> {
+            Integer integer = new Integer(0);
+            switch (year.getText().length()) {
+                case 2:
+                    integer = Integer.valueOf(year.getText().substring(0, 1));
+                    break;
+                case 3:
+                    integer = Integer.valueOf(year.getText().substring(0, 2));
+                    break;
+                case 4:
+                    integer = Integer.valueOf(year.getText().substring(0, 3));
+                    break;
+            }
+            if (integer < 100)
+                year.setText(integer + 1 + "%");
+            else year.setText("100%");
+        });
+        Button minus = new Button("-");
+        minus.setPrefHeight(25);
+        minus.setPrefWidth(25);
+        minus.setOnAction(event -> {
+            Integer integer = new Integer(0);
+            switch (year.getText().length()) {
+                case 2:
+                    integer = Integer.valueOf(year.getText().substring(0, 1));
+                    break;
+                case 3:
+                    integer = Integer.valueOf(year.getText().substring(0, 2));
+                    break;
+                case 4:
+                    integer = Integer.valueOf(year.getText().substring(0, 3));
+                    break;
+            }
+            if (integer > 0)
+                year.setText(integer - 1 + "%");
+            else year.setText("0%");
+        });
+        setTextField(year, null, "rating.down");
+        year.setAlignment(Pos.CENTER);
+        year.setDisable(true);
+        HBox hBox = new HBox(minus, year, plus);
 
         Label yearDown = new Label("Годовой коэффициент понижения:");
         yearDown.getStyleClass().add("label-big");
-        VBox general = new VBox(generalLabel, systemWindow, yearDown);
+        VBox general = new VBox(generalLabel, systemWindow, yearDown, hBox);
 
         setTextField(levelInternational, "Международная", "rating.level.international");
         setTextField(levelAllRussian, "Всероссийская", "rating.level.allrussian");
@@ -156,6 +209,7 @@ public class SettingsViewController implements Initializable {
             cancelButton.setDisable(false);
 
             systemWindow.setSelected(false);
+            year.setText("50%");
             levelInternational.setText("0");
             levelAllRussian.setText("0");
             levelRegionalBig.setText("0");
@@ -183,6 +237,7 @@ public class SettingsViewController implements Initializable {
             cancelButton.setDisable(true);
 
             properties.setProperty("system.window", String.valueOf(systemWindow.isSelected()));
+            properties.setProperty("rating.down", year.getText());
             properties.setProperty("rating.level.international", levelInternational.getText());
             properties.setProperty("rating.level.allrussian", levelAllRussian.getText());
             properties.setProperty("rating.level.regionalbig", levelRegionalBig.getText());
@@ -210,6 +265,30 @@ public class SettingsViewController implements Initializable {
                 e.printStackTrace();
             }
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initOwner(saveButton.getScene().getWindow());
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setTitle("Уведомление");
+            alert.setHeaderText("Для приминения изменений требуется перезагрузка");
+            alert.setContentText(null);
+            ButtonType reload = new ButtonType("Перезагрузить");
+            ButtonType exit = new ButtonType("Закрыть");
+            alert.getButtonTypes().setAll(reload, exit);
+
+            alert.showAndWait();
+
+            if (alert.getResult() == reload) {
+                Platform.runLater(() -> {
+                    try {
+                        Runtime.getRuntime().exec("Reloader.exe");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Platform.exit();
+                });
+            }
+
         });
 
         cancelButton.setOnMouseClicked(event -> {
@@ -217,6 +296,7 @@ public class SettingsViewController implements Initializable {
             cancelButton.setDisable(true);
 
             systemWindow.setSelected(Boolean.valueOf(properties.getProperty("system.window")));
+            year.setText(properties.getProperty("rating.down"));
             levelInternational.setText(properties.getProperty("rating.level.international"));
             levelAllRussian.setText(properties.getProperty("rating.level.allrussian"));
             levelRegionalBig.setText(properties.getProperty("rating.level.regionalbig"));

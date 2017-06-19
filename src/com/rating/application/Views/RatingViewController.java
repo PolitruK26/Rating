@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -31,6 +32,7 @@ public class RatingViewController implements Initializable {
     private Properties properties;
     private File config;
 
+    private Double yearDown;
     private Integer levelInternational;
     private Integer levelAllRussian;
     private Integer levelRegionalBig;
@@ -52,7 +54,7 @@ public class RatingViewController implements Initializable {
     private Integer tcDB;
     private Integer tcComputer;
 
-    private Integer rating;
+    private Double rating;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,7 +67,19 @@ public class RatingViewController implements Initializable {
             e.printStackTrace();
         }
 
-        rating = new Integer(0);
+        rating = new Double(0);
+
+        switch (properties.getProperty("rating.down").length()) {
+            case 2:
+                yearDown = Double.valueOf(properties.getProperty("rating.down").substring(0, 1)) / 100;
+                break;
+            case 3:
+                yearDown = Double.valueOf(properties.getProperty("rating.down").substring(0, 2)) / 100;
+                break;
+            case 4:
+                yearDown = Double.valueOf(properties.getProperty("rating.down").substring(0, 3)) / 100;
+                break;
+        }
 
         levelInternational = Integer.valueOf(properties.getProperty("rating.level.international"));
         levelAllRussian = Integer.valueOf(properties.getProperty("rating.level.allrussian"));
@@ -93,7 +107,7 @@ public class RatingViewController implements Initializable {
 
         for (AuthorEntity authorEntity : authorEntities) {
 
-            rating = 0;
+            rating = 0.0;
 
             Tooltip tooltip = new Tooltip(
                     authorEntity.getPositionAuthorEntity().getName()
@@ -155,6 +169,9 @@ public class RatingViewController implements Initializable {
                         break;
                 }
 
+                for (int i = 0; i < (Calendar.getInstance().get(Calendar.YEAR) - publicationEntity.getYear()); i++)
+                    rating *= yearDown;
+
             }
 
             for (AuthorPatentEntity authorPatentEntity : authorEntity.getAuthorPatentEntities()) {
@@ -197,7 +214,7 @@ public class RatingViewController implements Initializable {
                     authorEntity.getSecondName() + ' '
                             + authorEntity.getFirstName() + '.'
                             + authorEntity.getMiddleName() + ".\n"
-                            + rating + " баллов");
+                            + rating.intValue() + " баллов");
             label.getStyleClass().add("label-main");
             label.setPrefSize(75, 75);
             label.setAlignment(Pos.CENTER);

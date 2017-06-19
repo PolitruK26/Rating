@@ -6,8 +6,9 @@
 
 .label {
     -fx-text-alignment: center;
+    -fx-font-family: "Segoe UI Light";
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-text-fill: white;
+    -fx-font-size: 32px;
+    -fx-text-fill: #FFFFFF;
     -fx-effect: dropshadow(gaussian, #1e2124, 10, 0, 0, 5);
 }
