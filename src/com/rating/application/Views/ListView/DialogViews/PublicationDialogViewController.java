@@ -7,7 +7,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 import org.controlsfx.control.ListSelectionView;
 
@@ -163,32 +165,51 @@ public class PublicationDialogViewController implements Initializable {
 
         accept.setOnMouseClicked(event -> {
 
-            PublicationDAO publicationDAO = new PublicationDAO();
-            if (!isEdit)
-                publicationDAO.addPublication(new PublicationEntity(
-                        name.getText(),
-                        type.getValue(),
-                        collection.getValue(),
-                        Integer.valueOf(year.getText()),
-                        base.getValue(),
-                        new HashSet<AuthorEntity>(authors.getTargetItems()),
-                        new HashSet<KeywordsEntity>(keywords.getTargetItems())
-                ));
-            else {
-                PublicationEntity publicationEntity = new PublicationEntity();
-                publicationEntity.setId(this.id);
-                publicationEntity.setName(name.getText());
-                publicationEntity.setTypePublicationEntity(type.getValue());
-                publicationEntity.setCollectionEntity(collection.getValue());
-                publicationEntity.setYear(Integer.valueOf(year.getText()));
-                publicationEntity.setScientometricBaseEntity(base.getValue());
-                publicationEntity.setAuthorEntities(new HashSet<AuthorEntity>(authors.getTargetItems()));
-                publicationEntity.setKeywordsEntities(new HashSet<KeywordsEntity>(keywords.getTargetItems()));
-                publicationDAO.updatePublication(publicationEntity);
-            }
+            if (
+                    (name.getText() == null) ||
+                            (type.getValue() == null) ||
+                            (collection.getValue() == null) ||
+                            (year.getText() == null) ||
+                            (base.getValue() == null) ||
+                            (authors.getTargetItems().size() == 0) ||
+                            (keywords.getTargetItems().size() == 0)
+                    ) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(accept.getScene().getWindow());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.setTitle(null);
+                alert.setHeaderText("Внимание!");
+                alert.setContentText("Все поля должны быть заполнены");
+                alert.showAndWait();
+            } else {
+                PublicationDAO publicationDAO = new PublicationDAO();
+                if (!isEdit)
+                    publicationDAO.addPublication(new PublicationEntity(
+                            name.getText(),
+                            type.getValue(),
+                            collection.getValue(),
+                            Integer.valueOf(year.getText()),
+                            base.getValue(),
+                            new HashSet<AuthorEntity>(authors.getTargetItems()),
+                            new HashSet<KeywordsEntity>(keywords.getTargetItems())
+                    ));
+                else {
+                    PublicationEntity publicationEntity = new PublicationEntity();
+                    publicationEntity.setId(this.id);
+                    publicationEntity.setName(name.getText());
+                    publicationEntity.setTypePublicationEntity(type.getValue());
+                    publicationEntity.setCollectionEntity(collection.getValue());
+                    publicationEntity.setYear(Integer.valueOf(year.getText()));
+                    publicationEntity.setScientometricBaseEntity(base.getValue());
+                    publicationEntity.setAuthorEntities(new HashSet<AuthorEntity>(authors.getTargetItems()));
+                    publicationEntity.setKeywordsEntities(new HashSet<KeywordsEntity>(keywords.getTargetItems()));
+                    publicationDAO.updatePublication(publicationEntity);
+                }
 
-            Stage stage = (Stage) accept.getScene().getWindow();
-            stage.close();
+                Stage stage = (Stage) accept.getScene().getWindow();
+                stage.close();
+            }
         });
 
         cancel.setOnMouseClicked(event -> {

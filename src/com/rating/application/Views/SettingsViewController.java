@@ -269,9 +269,9 @@ public class SettingsViewController implements Initializable {
             alert.initOwner(saveButton.getScene().getWindow());
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.initStyle(StageStyle.UNDECORATED);
-            alert.setTitle("Уведомление");
-            alert.setHeaderText("Для приминения изменений требуется перезагрузка");
-            alert.setContentText(null);
+            alert.setTitle(null);
+            alert.setHeaderText("Внимание!");
+            alert.setContentText("Для приминения изменений требуется перезагрузка");
             ButtonType reload = new ButtonType("Перезагрузить");
             ButtonType exit = new ButtonType("Закрыть");
             alert.getButtonTypes().setAll(reload, exit);

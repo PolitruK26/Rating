@@ -5,12 +5,11 @@ import com.rating.application.Entity.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -169,28 +168,45 @@ public class CollectionDialogViewController implements Initializable {
 
         accept.setOnMouseClicked(event -> {
 
-            CollectionDAO collectionDAO = new CollectionDAO();
-            if (!isEdit)
-                collectionDAO.addCollection(new CollectionEntity(
-                        name.getText(),
-                        type.getValue(),
-                        theme.getValue(),
-                        conference.getValue(),
-                        edition.getValue()
-                ));
-            else {
-                CollectionEntity collectionEntity = new CollectionEntity();
-                collectionEntity.setId(this.id);
-                collectionEntity.setName(name.getText());
-                collectionEntity.setTypeCollectionEntity(type.getValue());
-                collectionEntity.setThemeCollectionEntity(theme.getValue());
-                collectionEntity.setConferenceEntity(conference.getValue());
-                collectionEntity.setEditionEntity(edition.getValue());
-                collectionDAO.updateCollection(collectionEntity);
-            }
+            if (
+                    (name.getText() == null) ||
+                            (type.getValue() == null) ||
+                            (theme.getValue() == null) ||
+                            (edition.getValue() == null) ||
+                            (conference.getValue() == null)
+                    ) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(accept.getScene().getWindow());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.setTitle(null);
+                alert.setHeaderText("Внимание!");
+                alert.setContentText("Все поля должны быть заполнены");
+                alert.showAndWait();
+            } else {
+                CollectionDAO collectionDAO = new CollectionDAO();
+                if (!isEdit)
+                    collectionDAO.addCollection(new CollectionEntity(
+                            name.getText(),
+                            type.getValue(),
+                            theme.getValue(),
+                            conference.getValue(),
+                            edition.getValue()
+                    ));
+                else {
+                    CollectionEntity collectionEntity = new CollectionEntity();
+                    collectionEntity.setId(this.id);
+                    collectionEntity.setName(name.getText());
+                    collectionEntity.setTypeCollectionEntity(type.getValue());
+                    collectionEntity.setThemeCollectionEntity(theme.getValue());
+                    collectionEntity.setConferenceEntity(conference.getValue());
+                    collectionEntity.setEditionEntity(edition.getValue());
+                    collectionDAO.updateCollection(collectionEntity);
+                }
 
-            Stage stage = (Stage) accept.getScene().getWindow();
-            stage.close();
+                Stage stage = (Stage) accept.getScene().getWindow();
+                stage.close();
+            }
         });
 
         cancel.setOnMouseClicked(event -> {

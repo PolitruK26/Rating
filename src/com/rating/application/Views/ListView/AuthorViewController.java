@@ -18,8 +18,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -279,9 +279,22 @@ public class AuthorViewController implements Initializable {
                 Button delete = new Button();
                 delete.getStyleClass().add("button-delete");
                 delete.setOnMouseClicked(event -> {
-                    AuthorDAO authorDAO = new AuthorDAO();
-                    authorDAO.deleteAuthor(item);
-                    initData();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.initOwner(delete.getScene().getWindow());
+                    alert.initModality(Modality.APPLICATION_MODAL);
+                    alert.initStyle(StageStyle.UNDECORATED);
+                    alert.setTitle(null);
+                    alert.setHeaderText("Требуется подтверждение операции");
+                    alert.setContentText("Вы действительно хотите удалить запись?");
+                    ButtonType yes = new ButtonType("Да");
+                    ButtonType no = new ButtonType("Нет");
+                    alert.getButtonTypes().setAll(yes, no);
+                    alert.showAndWait();
+                    if (alert.getResult() == yes) {
+                        AuthorDAO authorDAO = new AuthorDAO();
+                        authorDAO.deleteAuthor(item);
+                        initData();
+                    }
                 });
 
                 HBox buttons = new HBox(edit, delete);

@@ -10,13 +10,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 import org.controlsfx.control.CheckListView;
 import org.controlsfx.control.ListSelectionView;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class PatentDialogViewController implements Initializable {
 
@@ -138,53 +143,81 @@ public class PatentDialogViewController implements Initializable {
 
         accept.setOnMouseClicked(event -> {
 
-            PatentDAO delete = new PatentDAO();
-            PatentDAO update = new PatentDAO();
-            if (!isEdit) {
-                PatentEntity patentEntity = new PatentEntity();
-                patentEntity.setName(name.getText());
-                patentEntity.setNumber(number.getText());
-                patentEntity.setYear(Integer.valueOf(year.getText()));
-                patentEntity.setTypePatentEntity(type.getValue());
-                patentEntity.setRegistrationPlaceEntity(place.getValue());
-                Collection<AuthorPatentEntity> authorPatentEntities = FXCollections.observableArrayList();
-                for (AuthorEntity authorEntity : holder.getItems()) {
-                    AuthorPatentEntity authorPatentEntity = new AuthorPatentEntity();
-                    authorPatentEntity.setAuthorEntity(authorEntity);
-                    authorPatentEntity.setPatentEntity(patentEntity);
-                    if (holder.getCheckModel().getCheckedItems().get(0) == authorEntity)
-                        authorPatentEntity.setHolder(new Integer(1).byteValue());
-                    else
-                        authorPatentEntity.setHolder(new Integer(0).byteValue());
-                    authorPatentEntities.add(authorPatentEntity);
-                }
-                patentEntity.setAuthorPatentEntities(new HashSet<AuthorPatentEntity>(authorPatentEntities));
-                update.addPatent(patentEntity, authorPatentEntities);
+            if (
+                    (name.getText() == null) ||
+                            (type.getValue() == null) ||
+                            (year.getText() == null) ||
+                            (number.getText() == null) ||
+                            (place.getValue() == null) ||
+                            (authors.getTargetItems().size() == 0) ||
+                            (holder.getItems().size() == 0)
+                    ) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(accept.getScene().getWindow());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.setTitle(null);
+                alert.setHeaderText("Внимание!");
+                alert.setContentText("Все поля должны быть заполнены");
+                alert.showAndWait();
+            } else if (holder.getCheckModel().getCheckedItems().size() > 1) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(accept.getScene().getWindow());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.setTitle(null);
+                alert.setHeaderText("Внимание!");
+                alert.setContentText("Должно быть не более одного правообладателя");
+                alert.showAndWait();
             } else {
-                PatentEntity patentEntity = new PatentEntity();
-                patentEntity.setName(name.getText());
-                patentEntity.setNumber(number.getText());
-                patentEntity.setYear(Integer.valueOf(year.getText()));
-                patentEntity.setTypePatentEntity(type.getValue());
-                patentEntity.setRegistrationPlaceEntity(place.getValue());
-                Collection<AuthorPatentEntity> authorPatentEntities = FXCollections.observableArrayList();
-                for (AuthorEntity authorEntity : holder.getItems()) {
-                    AuthorPatentEntity authorPatentEntity = new AuthorPatentEntity();
-                    authorPatentEntity.setAuthorEntity(authorEntity);
-                    authorPatentEntity.setPatentEntity(patentEntity);
-                    if (holder.getCheckModel().getCheckedItems().get(0) == authorEntity)
-                        authorPatentEntity.setHolder(new Integer(1).byteValue());
-                    else
-                        authorPatentEntity.setHolder(new Integer(0).byteValue());
-                    authorPatentEntities.add(authorPatentEntity);
+                PatentDAO delete = new PatentDAO();
+                PatentDAO update = new PatentDAO();
+                if (!isEdit) {
+                    PatentEntity patentEntity = new PatentEntity();
+                    patentEntity.setName(name.getText());
+                    patentEntity.setNumber(number.getText());
+                    patentEntity.setYear(Integer.valueOf(year.getText()));
+                    patentEntity.setTypePatentEntity(type.getValue());
+                    patentEntity.setRegistrationPlaceEntity(place.getValue());
+                    Collection<AuthorPatentEntity> authorPatentEntities = FXCollections.observableArrayList();
+                    for (AuthorEntity authorEntity : holder.getItems()) {
+                        AuthorPatentEntity authorPatentEntity = new AuthorPatentEntity();
+                        authorPatentEntity.setAuthorEntity(authorEntity);
+                        authorPatentEntity.setPatentEntity(patentEntity);
+                        if (holder.getCheckModel().getCheckedItems().get(0) == authorEntity)
+                            authorPatentEntity.setHolder(new Integer(1).byteValue());
+                        else
+                            authorPatentEntity.setHolder(new Integer(0).byteValue());
+                        authorPatentEntities.add(authorPatentEntity);
+                    }
+                    patentEntity.setAuthorPatentEntities(new HashSet<AuthorPatentEntity>(authorPatentEntities));
+                    update.addPatent(patentEntity, authorPatentEntities);
+                } else {
+                    PatentEntity patentEntity = new PatentEntity();
+                    patentEntity.setName(name.getText());
+                    patentEntity.setNumber(number.getText());
+                    patentEntity.setYear(Integer.valueOf(year.getText()));
+                    patentEntity.setTypePatentEntity(type.getValue());
+                    patentEntity.setRegistrationPlaceEntity(place.getValue());
+                    Collection<AuthorPatentEntity> authorPatentEntities = FXCollections.observableArrayList();
+                    for (AuthorEntity authorEntity : holder.getItems()) {
+                        AuthorPatentEntity authorPatentEntity = new AuthorPatentEntity();
+                        authorPatentEntity.setAuthorEntity(authorEntity);
+                        authorPatentEntity.setPatentEntity(patentEntity);
+                        if (holder.getCheckModel().getCheckedItems().get(0) == authorEntity)
+                            authorPatentEntity.setHolder(new Integer(1).byteValue());
+                        else
+                            authorPatentEntity.setHolder(new Integer(0).byteValue());
+                        authorPatentEntities.add(authorPatentEntity);
+                    }
+                    patentEntity.setAuthorPatentEntities(new HashSet<AuthorPatentEntity>(authorPatentEntities));
+                    delete.deletePatentById(this.id);
+                    update.updatePatent(patentEntity, authorPatentEntities);
                 }
-                patentEntity.setAuthorPatentEntities(new HashSet<AuthorPatentEntity>(authorPatentEntities));
-                delete.deletePatentById(this.id);
-                update.updatePatent(patentEntity, authorPatentEntities);
-            }
 
-            Stage stage = (Stage) accept.getScene().getWindow();
-            stage.close();
+                Stage stage = (Stage) accept.getScene().getWindow();
+                stage.close();
+            }
         });
 
         cancel.setOnMouseClicked(event -> {

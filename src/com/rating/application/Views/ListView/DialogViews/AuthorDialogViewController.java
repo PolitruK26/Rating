@@ -11,12 +11,11 @@ import com.rating.application.Entity.RankAuthorEntity;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -161,34 +160,55 @@ public class AuthorDialogViewController implements Initializable {
 
         accept.setOnMouseClicked(event -> {
 
-            AuthorDAO authorDAO = new AuthorDAO();
-            if (!isEdit)
-                authorDAO.addAuthor(new AuthorEntity(
-                        second.getText(),
-                        first.getText(),
-                        middle.getText(),
-                        phome.getText(),
-                        email.getText(),
-                        position.getValue(),
-                        power.getValue(),
-                        rank.getValue()
-                ));
-            else {
-                AuthorEntity authorEntity = new AuthorEntity();
-                authorEntity.setId(this.id);
-                authorEntity.setSecondName(second.getText());
-                authorEntity.setFirstName(first.getText());
-                authorEntity.setMiddleName(middle.getText());
-                authorEntity.setPhone(phome.getText());
-                authorEntity.setEmail(email.getText());
-                authorEntity.setPositionAuthorEntity(position.getValue());
-                authorEntity.setPowerAuthorEntity(power.getValue());
-                authorEntity.setRankAuthorEntity(rank.getValue());
-                authorDAO.updateAuthor(authorEntity);
-            }
+            if (
+                    (second.getText() == null) ||
+                            (first.getText() == null) ||
+                            (first.getText() == null) ||
+                            (middle.getText() == null) ||
+                            (phome.getText() == null) ||
+                            (email.getText() == null) ||
+                            (position.getValue() == null) ||
+                            (power.getValue() == null) ||
+                            (rank.getValue() == null)
+                    ) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(accept.getScene().getWindow());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.setTitle(null);
+                alert.setHeaderText("Внимание!");
+                alert.setContentText("Все поля должны быть заполнены");
+                alert.showAndWait();
+            } else {
+                AuthorDAO authorDAO = new AuthorDAO();
+                if (!isEdit)
+                    authorDAO.addAuthor(new AuthorEntity(
+                            second.getText(),
+                            first.getText(),
+                            middle.getText(),
+                            phome.getText(),
+                            email.getText(),
+                            position.getValue(),
+                            power.getValue(),
+                            rank.getValue()
+                    ));
+                else {
+                    AuthorEntity authorEntity = new AuthorEntity();
+                    authorEntity.setId(this.id);
+                    authorEntity.setSecondName(second.getText());
+                    authorEntity.setFirstName(first.getText());
+                    authorEntity.setMiddleName(middle.getText());
+                    authorEntity.setPhone(phome.getText());
+                    authorEntity.setEmail(email.getText());
+                    authorEntity.setPositionAuthorEntity(position.getValue());
+                    authorEntity.setPowerAuthorEntity(power.getValue());
+                    authorEntity.setRankAuthorEntity(rank.getValue());
+                    authorDAO.updateAuthor(authorEntity);
+                }
 
-            Stage stage = (Stage) accept.getScene().getWindow();
-            stage.close();
+                Stage stage = (Stage) accept.getScene().getWindow();
+                stage.close();
+            }
         });
 
         cancel.setOnMouseClicked(event -> {

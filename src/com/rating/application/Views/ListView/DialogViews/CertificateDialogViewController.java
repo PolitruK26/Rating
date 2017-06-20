@@ -12,7 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 import org.controlsfx.control.CheckListView;
 import org.controlsfx.control.ListSelectionView;
@@ -118,51 +120,78 @@ public class CertificateDialogViewController implements Initializable {
 
         accept.setOnMouseClicked(event -> {
 
-            CertificateDAO update = new CertificateDAO();
-            CertificateDAO delete = new CertificateDAO();
-            if (!isEdit) {
-                CertificateEntity certificateEntity = new CertificateEntity();
-                certificateEntity.setName(name.getText());
-                certificateEntity.setNumber(number.getText());
-                certificateEntity.setYear(Integer.valueOf(year.getText()));
-                certificateEntity.setTypeCertificateEntity(type.getValue());
-                Collection<AuthorCertificateEntity> authorCertificateEntities = FXCollections.observableArrayList();
-                for (AuthorEntity authorEntity : holder.getItems()) {
-                    AuthorCertificateEntity authorCertificateEntity = new AuthorCertificateEntity();
-                    authorCertificateEntity.setAuthorEntity(authorEntity);
-                    authorCertificateEntity.setCertificateEntity(certificateEntity);
-                    if (holder.getCheckModel().getCheckedItems().get(0) == authorEntity)
-                        authorCertificateEntity.setHolder(new Integer(1).byteValue());
-                    else
-                        authorCertificateEntity.setHolder(new Integer(0).byteValue());
-                    authorCertificateEntities.add(authorCertificateEntity);
-                }
-                certificateEntity.setAuthorCertificateEntities(new HashSet<AuthorCertificateEntity>(authorCertificateEntities));
-                update.addCertificate(certificateEntity, authorCertificateEntities);
+            if (
+                    (name.getText() == null) ||
+                            (type.getValue() == null) ||
+                            (year.getText() == null) ||
+                            (number.getText() == null) ||
+                            (authors.getTargetItems().size() == 0) ||
+                            (holder.getItems().size() == 0)
+                    ) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(accept.getScene().getWindow());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.setTitle(null);
+                alert.setHeaderText("Внимание!");
+                alert.setContentText("Все поля должны быть заполнены");
+                alert.showAndWait();
+            } else if (holder.getCheckModel().getCheckedItems().size() > 1) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(accept.getScene().getWindow());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.setTitle(null);
+                alert.setHeaderText("Внимание!");
+                alert.setContentText("Должно быть не более одного правообладателя");
+                alert.showAndWait();
             } else {
-                CertificateEntity certificateEntity = new CertificateEntity();
-                certificateEntity.setName(name.getText());
-                certificateEntity.setNumber(number.getText());
-                certificateEntity.setYear(Integer.valueOf(year.getText()));
-                certificateEntity.setTypeCertificateEntity(type.getValue());
-                Collection<AuthorCertificateEntity> authorCertificateEntities = FXCollections.observableArrayList();
-                for (AuthorEntity authorEntity : holder.getItems()) {
-                    AuthorCertificateEntity authorCertificateEntity = new AuthorCertificateEntity();
-                    authorCertificateEntity.setAuthorEntity(authorEntity);
-                    authorCertificateEntity.setCertificateEntity(certificateEntity);
-                    if (holder.getCheckModel().getCheckedItems().get(0) == authorEntity)
-                        authorCertificateEntity.setHolder(new Integer(1).byteValue());
-                    else
-                        authorCertificateEntity.setHolder(new Integer(0).byteValue());
-                    authorCertificateEntities.add(authorCertificateEntity);
+                CertificateDAO update = new CertificateDAO();
+                CertificateDAO delete = new CertificateDAO();
+                if (!isEdit) {
+                    CertificateEntity certificateEntity = new CertificateEntity();
+                    certificateEntity.setName(name.getText());
+                    certificateEntity.setNumber(number.getText());
+                    certificateEntity.setYear(Integer.valueOf(year.getText()));
+                    certificateEntity.setTypeCertificateEntity(type.getValue());
+                    Collection<AuthorCertificateEntity> authorCertificateEntities = FXCollections.observableArrayList();
+                    for (AuthorEntity authorEntity : holder.getItems()) {
+                        AuthorCertificateEntity authorCertificateEntity = new AuthorCertificateEntity();
+                        authorCertificateEntity.setAuthorEntity(authorEntity);
+                        authorCertificateEntity.setCertificateEntity(certificateEntity);
+                        if (holder.getCheckModel().getCheckedItems().get(0) == authorEntity)
+                            authorCertificateEntity.setHolder(new Integer(1).byteValue());
+                        else
+                            authorCertificateEntity.setHolder(new Integer(0).byteValue());
+                        authorCertificateEntities.add(authorCertificateEntity);
+                    }
+                    certificateEntity.setAuthorCertificateEntities(new HashSet<AuthorCertificateEntity>(authorCertificateEntities));
+                    update.addCertificate(certificateEntity, authorCertificateEntities);
+                } else {
+                    CertificateEntity certificateEntity = new CertificateEntity();
+                    certificateEntity.setName(name.getText());
+                    certificateEntity.setNumber(number.getText());
+                    certificateEntity.setYear(Integer.valueOf(year.getText()));
+                    certificateEntity.setTypeCertificateEntity(type.getValue());
+                    Collection<AuthorCertificateEntity> authorCertificateEntities = FXCollections.observableArrayList();
+                    for (AuthorEntity authorEntity : holder.getItems()) {
+                        AuthorCertificateEntity authorCertificateEntity = new AuthorCertificateEntity();
+                        authorCertificateEntity.setAuthorEntity(authorEntity);
+                        authorCertificateEntity.setCertificateEntity(certificateEntity);
+                        if (holder.getCheckModel().getCheckedItems().get(0) == authorEntity)
+                            authorCertificateEntity.setHolder(new Integer(1).byteValue());
+                        else
+                            authorCertificateEntity.setHolder(new Integer(0).byteValue());
+                        authorCertificateEntities.add(authorCertificateEntity);
+                    }
+                    certificateEntity.setAuthorCertificateEntities(new HashSet<AuthorCertificateEntity>(authorCertificateEntities));
+                    delete.deleteCertificateById(this.id);
+                    update.addCertificate(certificateEntity, authorCertificateEntities);
                 }
-                certificateEntity.setAuthorCertificateEntities(new HashSet<AuthorCertificateEntity>(authorCertificateEntities));
-                delete.deleteCertificateById(this.id);
-                update.addCertificate(certificateEntity, authorCertificateEntities);
-            }
 
-            Stage stage = (Stage) accept.getScene().getWindow();
-            stage.close();
+                Stage stage = (Stage) accept.getScene().getWindow();
+                stage.close();
+            }
         });
 
         cancel.setOnMouseClicked(event -> {
