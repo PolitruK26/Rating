@@ -37,6 +37,7 @@ public class ChartViewController implements Initializable {
     private BarChart chart3;
     private PieChart chart4;
     private PieChart chart5;
+    private PieChart chart6;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,6 +47,7 @@ public class ChartViewController implements Initializable {
         XYChart.Series series3 = new XYChart.Series<>();
         ObservableList<PieChart.Data> series4 = FXCollections.observableArrayList();
         ObservableList<PieChart.Data> series5 = FXCollections.observableArrayList();
+        ObservableList<PieChart.Data> series6 = FXCollections.observableArrayList();
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -55,6 +57,7 @@ public class ChartViewController implements Initializable {
             ResultSet resultSet3 = connection.createStatement().executeQuery("SELECT patent_Year,count(ID_patent) FROM patent GROUP BY patent_Year");
             ResultSet resultSet4 = connection.createStatement().executeQuery("SELECT position_author.position_Name,count(author.ID_author) FROM author INNER JOIN position_author ON author.ID_position = position_author.ID_position GROUP BY position_Name");
             ResultSet resultSet5 = connection.createStatement().executeQuery("SELECT type_publication.type_publication_Name,count(publication.ID_publication) FROM publication INNER JOIN type_publication ON publication.ID_type_publication = type_publication.ID_type_publication GROUP BY type_publication_Name");
+            ResultSet resultSet6 = connection.createStatement().executeQuery("SELECT keywords.keywords_Name,COUNT(publication.ID_publication) FROM publication_keywords INNER JOIN publication ON publication_keywords.ID_publication = publication.ID_publication INNER JOIN keywords ON publication_keywords.ID_keywords = keywords.ID_keywords GROUP BY keywords_Name ORDER BY COUNT(publication.ID_publication) DESC LIMIT 5");
             while (resultSet1.next()) {
                 series1.getData().add(new XYChart.Data(String.valueOf(resultSet1.getInt(1)), resultSet1.getInt(2)));
             }
@@ -70,6 +73,9 @@ public class ChartViewController implements Initializable {
             while (resultSet5.next()) {
                 series5.add(new PieChart.Data(resultSet5.getString(1), resultSet5.getInt(2)));
             }
+            while (resultSet6.next()) {
+                series6.add(new PieChart.Data(resultSet6.getString(1), resultSet6.getInt(2)));
+            }
             chart1 = new BarChart(new CategoryAxis(), new NumberAxis());
             chart1.getData().add(series1);
             chart1.setLegendVisible(false);
@@ -83,6 +89,8 @@ public class ChartViewController implements Initializable {
             chart4.setLegendVisible(false);
             chart5 = new PieChart(series5);
             chart5.setLegendVisible(false);
+            chart6 = new PieChart(series6);
+            chart6.setLegendVisible(false);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -108,7 +116,8 @@ public class ChartViewController implements Initializable {
                 "Количество свидетельств по годам",
                 "Количество патентов по годам",
                 "Количество авторов по должностям",
-                "Количество публикаций по видам"
+                "Количество публикаций по видам",
+                "Пять самых распространненых ключевых слов"
         ));
 
         comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -132,6 +141,10 @@ public class ChartViewController implements Initializable {
                 case "Количество публикаций по видам":
                     content.getChildren().clear();
                     content.getChildren().add(chart5);
+                    break;
+                case "Пять самых распространненых ключевых слов":
+                    content.getChildren().clear();
+                    content.getChildren().add(chart6);
                     break;
             }
         });

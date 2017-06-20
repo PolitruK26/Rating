@@ -64,7 +64,7 @@
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
     -fx-border-color: #1e2124;
-    -fx-pref-height: 30px;
+    -fx-pref-height: 50px;
 }
 
 .combo-box .text-field {
@@ -73,6 +73,7 @@
 
 .combo-box .cell {
     -fx-text-fill: #a2a3a5;
+    -fx-font-size: 20px;
 }
 
 .combo-box-popup > .list-view {
@@ -102,7 +103,7 @@
 }
 
 .axis {
-    -fx-tick-label-font-size: 14px;
+    -fx-tick-label-font-size: 24px;
     -fx-tick-label-fill: -top-bar-menu-button-text-fill;
 }
 
@@ -116,7 +117,7 @@
 
 .chart-pie-label {
     -fx-fill: #afb0b2;
-    -fx-font-size: 14px;
+    -fx-font-size: 24px;
 }
 
 .menu-item .label, .combo-box-popup .list-view .list-cell {
