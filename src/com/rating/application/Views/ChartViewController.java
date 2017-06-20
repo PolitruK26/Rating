@@ -39,6 +39,13 @@ public class ChartViewController implements Initializable {
     private PieChart chart5;
     private PieChart chart6;
 
+    private final String query1 = "SELECT publication_Year,count(ID_publication) FROM publication GROUP BY publication_Year";
+    private final String query2 = "SELECT certificate_Year,count(ID_certificate) FROM certificate GROUP BY certificate_Year";
+    private final String query3 = "SELECT patent_Year,count(ID_patent) FROM patent GROUP BY patent_Year";
+    private final String query4 = "SELECT position_author.position_Name,count(author.ID_author) FROM author INNER JOIN position_author ON author.ID_position = position_author.ID_position GROUP BY position_Name";
+    private final String query5 = "SELECT type_publication.type_publication_Name,count(publication.ID_publication) FROM publication INNER JOIN type_publication ON publication.ID_type_publication = type_publication.ID_type_publication GROUP BY type_publication_Name";
+    private final String query6 = "SELECT keywords.keywords_Name,COUNT(publication.ID_publication) FROM publication_keywords INNER JOIN publication ON publication_keywords.ID_publication = publication.ID_publication INNER JOIN keywords ON publication_keywords.ID_keywords = keywords.ID_keywords GROUP BY keywords_Name ORDER BY COUNT(publication.ID_publication) DESC LIMIT 5";
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -52,12 +59,12 @@ public class ChartViewController implements Initializable {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_analysis", "root", "");
-            ResultSet resultSet1 = connection.createStatement().executeQuery("SELECT publication_Year,count(ID_publication) FROM publication GROUP BY publication_Year");
-            ResultSet resultSet2 = connection.createStatement().executeQuery("SELECT certificate_Year,count(ID_certificate) FROM certificate GROUP BY certificate_Year");
-            ResultSet resultSet3 = connection.createStatement().executeQuery("SELECT patent_Year,count(ID_patent) FROM patent GROUP BY patent_Year");
-            ResultSet resultSet4 = connection.createStatement().executeQuery("SELECT position_author.position_Name,count(author.ID_author) FROM author INNER JOIN position_author ON author.ID_position = position_author.ID_position GROUP BY position_Name");
-            ResultSet resultSet5 = connection.createStatement().executeQuery("SELECT type_publication.type_publication_Name,count(publication.ID_publication) FROM publication INNER JOIN type_publication ON publication.ID_type_publication = type_publication.ID_type_publication GROUP BY type_publication_Name");
-            ResultSet resultSet6 = connection.createStatement().executeQuery("SELECT keywords.keywords_Name,COUNT(publication.ID_publication) FROM publication_keywords INNER JOIN publication ON publication_keywords.ID_publication = publication.ID_publication INNER JOIN keywords ON publication_keywords.ID_keywords = keywords.ID_keywords GROUP BY keywords_Name ORDER BY COUNT(publication.ID_publication) DESC LIMIT 5");
+            ResultSet resultSet1 = connection.createStatement().executeQuery(query1);
+            ResultSet resultSet2 = connection.createStatement().executeQuery(query2);
+            ResultSet resultSet3 = connection.createStatement().executeQuery(query3);
+            ResultSet resultSet4 = connection.createStatement().executeQuery(query4);
+            ResultSet resultSet5 = connection.createStatement().executeQuery(query5);
+            ResultSet resultSet6 = connection.createStatement().executeQuery(query6);
             while (resultSet1.next()) {
                 series1.getData().add(new XYChart.Data(String.valueOf(resultSet1.getInt(1)), resultSet1.getInt(2)));
             }
@@ -95,21 +102,12 @@ public class ChartViewController implements Initializable {
             e.printStackTrace();
         }
 
-        MenuItem menuItem = new MenuItem("Сохранить в png");
-        menuItem.setOnAction(event -> {
-            WritableImage image = chart1.snapshot(new SnapshotParameters(), null);
-            File file = new File("chart.png");
-            try {
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-            } catch (IOException e) {
-            }
-        });
-        ContextMenu contextMenu = new ContextMenu(menuItem);
-
-        chart1.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.SECONDARY))
-                contextMenu.show(chart1, event.getScreenX(), event.getScreenY());
-        });
+        initContextMenu(chart1, "Количество публикаций по годам");
+        initContextMenu(chart2, "Количество свидетельств по годам");
+        initContextMenu(chart3, "Количество патентов по годам");
+        initContextMenu(chart4, "Количество авторов по должностям");
+        initContextMenu(chart5, "Количество публикаций по видам");
+        initContextMenu(chart6, "Пять самых распространненых ключевых слов");
 
         comboBox.setItems(FXCollections.observableArrayList(
                 "Количество публикаций по годам",
@@ -149,6 +147,42 @@ public class ChartViewController implements Initializable {
             }
         });
 
+    }
+
+    void initContextMenu(BarChart chart, String string) {
+        MenuItem menuItem = new MenuItem("Сохранить как изображение");
+        menuItem.setOnAction(event -> {
+            WritableImage image = chart.snapshot(new SnapshotParameters(), null);
+            File file = new File("..\\" + string + ".png");
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            } catch (IOException e) {
+            }
+        });
+        ContextMenu contextMenu = new ContextMenu(menuItem);
+
+        chart.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.SECONDARY))
+                contextMenu.show(chart, event.getScreenX(), event.getScreenY());
+        });
+    }
+
+    void initContextMenu(PieChart chart, String string) {
+        MenuItem menuItem = new MenuItem("Сохранить как изображение");
+        menuItem.setOnAction(event -> {
+            WritableImage image = chart.snapshot(new SnapshotParameters(), null);
+            File file = new File("..\\" + string + ".png");
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            } catch (IOException e) {
+            }
+        });
+        ContextMenu contextMenu = new ContextMenu(menuItem);
+
+        chart.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.SECONDARY))
+                contextMenu.show(chart, event.getScreenX(), event.getScreenY());
+        });
     }
 
 }
