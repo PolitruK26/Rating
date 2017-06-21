@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-06-20T14:56:42 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="58682e7b-16a4-4dbe-8698-22a797cb59dd">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+  patent.patent_Name,
+  patent.patent_Number,
+  patent.patent_Year,
+  type_patent.type_patent_Name,
+  CONCAT(registration_place.registration_place_Name, ', г.', city.city_Name),
+  GROUP_CONCAT(author.author_Second_Name, ' ', author.author_First_Name, '.', author.author_Middle_Name, '.' SEPARATOR ', ')
+FROM patent
+  INNER JOIN type_patent
+    ON patent.ID_type_patent = type_patent.ID_type_patent
+  INNER JOIN registration_place
+    ON patent.ID_registration_place = registration_place.ID_registration_place
+  INNER JOIN city
+    ON registration_place.ID_city = city.ID_city
+  INNER JOIN author_patent
+    ON author_patent.ID_patent = patent.ID_patent
+  INNER JOIN author
+    ON author_patent.ID_author = author.ID_author
+GROUP BY patent_Name
+ORDER BY patent_Name]]>
+	</queryString>
+	<field name="patent_Name" class="java.lang.String"/>
+	<field name="patent_Number" class="java.lang.String"/>
+	<field name="patent_Year" class="java.lang.Integer"/>
+	<field name="type_patent_Name" class="java.lang.String"/>
+	<field name="CONCAT(registration_place.registration_place_Name, &apos;, г.&apos;, city.city_Name)" class="java.lang.String"/>
+	<field name="GROUP_CONCAT(author.author_Second_Name, &apos; &apos;, author.author_First_Name, &apos;.&apos;, author.author_Middle_Name, &apos;.&apos; SEPARATOR &apos;, &apos;)" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="30" uuid="f5770f52-12b8-4cb1-860e-03e7f9a03383"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Патенты]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="86" splitType="Stretch">
+			<textField>
+				<reportElement x="160" y="0" width="390" height="30" uuid="33dd8dd0-761f-45c7-9c77-a3ef4e1c5518"/>
+				<textFieldExpression><![CDATA[$F{patent_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="20" width="92" height="20" uuid="adf2137c-59d1-4b01-8d68-fd8837d0e86b"/>
+				<textFieldExpression><![CDATA[$F{patent_Number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="40" width="92" height="20" uuid="3a953aa6-7870-47a3-80bf-db6062c491dc"/>
+				<textFieldExpression><![CDATA[$F{patent_Year}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="160" height="20" uuid="412c0745-9a44-41be-840e-08528a87e541"/>
+				<textFieldExpression><![CDATA[$F{type_patent_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="60" width="170" height="20" uuid="3f361485-76ed-49ca-99be-4a29b6c48248"/>
+				<textFieldExpression><![CDATA[$F{CONCAT(registration_place.registration_place_Name, ', г.', city.city_Name)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="30" width="340" height="20" uuid="b9aa1b5f-fd49-41ae-b155-56a5ff156762"/>
+				<textFieldExpression><![CDATA[$F{GROUP_CONCAT(author.author_Second_Name, ' ', author.author_First_Name, '.', author.author_Middle_Name, '.' SEPARATOR ', ')}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="40" height="20" uuid="28bb7f97-ae25-40c9-8008-f5520b8b8b5a"/>
+				<text><![CDATA[Номер: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="40" height="20" uuid="e49cd274-3fed-4c24-ada9-3cba8ce55529"/>
+				<text><![CDATA[Год: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="100" height="20" uuid="ab7771c8-12a2-444a-a67d-7fa65e420bc2"/>
+				<text><![CDATA[Зарегестрирован в ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="30" width="50" height="20" uuid="c4c56290-2be7-4401-ae1e-69f87c8d0991"/>
+				<text><![CDATA[Авторы: ]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="350" y="8" width="100" height="30" uuid="25f685b7-da72-4803-bfc4-7ac39aaa6c95"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Страница " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="450" y="8" width="100" height="30" uuid="3b5f5c72-0b69-496a-be25-f98a7f2e3450"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" из " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

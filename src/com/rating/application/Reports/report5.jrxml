@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-06-20T15:13:55 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report5" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="660ca549-0d91-4528-b1af-e73133331cd3">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+  collection.collection_Name,
+  type_collection.type_collection_Name,
+  theme_collection.theme_collection_Name,
+  conference.conference_Name,
+  CONCAT(edition.edition_Name, ', г.', city.city_Name)
+FROM collection
+  INNER JOIN type_collection
+    ON collection.ID_type_collection = type_collection.ID_type_collection
+  INNER JOIN conference
+    ON collection.ID_conference = conference.ID_conference
+  INNER JOIN edition
+    ON collection.ID_edition = edition.ID_edition
+  INNER JOIN city
+    ON edition.ID_city = city.ID_city
+  INNER JOIN theme_collection
+    ON collection.ID_theme_collection = theme_collection.ID_theme_collection
+ORDER BY collection_Name]]>
+	</queryString>
+	<field name="collection_Name" class="java.lang.String"/>
+	<field name="type_collection_Name" class="java.lang.String"/>
+	<field name="theme_collection_Name" class="java.lang.String"/>
+	<field name="conference_Name" class="java.lang.String"/>
+	<field name="CONCAT(edition.edition_Name, &apos;, г.&apos;, city.city_Name)" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="30" uuid="a0314cac-eaff-4b3d-a67f-ced2136f9ec6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Сборники]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="84" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="20" width="550" height="20" uuid="70640502-66da-485f-b3c4-df1d22f9445b"/>
+				<textFieldExpression><![CDATA[$F{type_collection_Name} + " :: " + $F{collection_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="550" height="20" uuid="a1a41391-82fa-4255-814e-2a268ff5a87b"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{theme_collection_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="40" width="460" height="20" uuid="d6aa918b-6d3b-4977-b944-35d36e0c4fc1"/>
+				<textFieldExpression><![CDATA["\"" +$F{conference_Name}+"\""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="60" width="480" height="20" uuid="fa407cfe-a335-4769-aa66-de43cd66533c"/>
+				<textFieldExpression><![CDATA[$F{CONCAT(edition.edition_Name, ', г.', city.city_Name)}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="90" height="20" uuid="adfd3a32-1ca6-4032-9b57-7011d3fc6f0f"/>
+				<text><![CDATA[Для конференции ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="70" height="20" uuid="b16b82d0-2b6d-42f6-a465-79faa6a7004b"/>
+				<text><![CDATA[Издательство: ]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="350" y="0" width="100" height="30" uuid="35909c70-4ca7-4174-8582-2b5c60230d93"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Страница " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="450" y="0" width="100" height="30" uuid="7371bf35-16b1-4d85-8f5f-2413fc429fed"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" из " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
