@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
 <!-- 2017-06-04T18:33:47 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="866b100a-24e6-42d9-8f2a-f53f9293772c">
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="220"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="774"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="866b100a-24e6-42d9-8f2a-f53f9293772c">
+    <queryString language="SQL">
+        <![CDATA[SELECT
   publication.publication_Name,
   GROUP_CONCAT(author.author_Second_Name, ' ', author.author_First_Name, '.', author.author_Middle_Name, '.') AS expr,
   type_publication.type_publication_Name,
@@ -26,93 +26,93 @@ FROM publication
   INNER JOIN author
     ON author_publication.ID_author = author.ID_author
 GROUP BY publication.ID_publication]]>
-	</queryString>
-	<field name="publication_Name" class="java.lang.String"/>
-	<field name="expr" class="java.lang.String"/>
-	<field name="type_publication_Name" class="java.lang.String"/>
-	<field name="publication_Year" class="java.lang.Integer"/>
-	<field name="scientometric_base_Name" class="java.lang.String"/>
-	<field name="collection_Name" class="java.lang.String"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band height="31" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="555" height="30" uuid="56ac4f1b-b74d-4355-a1e5-a5d88eb18534"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="19" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Публикации]]></text>
-			</staticText>
-		</band>
-	</title>
-	<detail>
-		<band height="124" splitType="Stretch">
-			<textField>
-				<reportElement x="130" y="20" width="425" height="30" uuid="458e00f1-99fb-4cd5-8e24-da811b354d77"/>
-				<textFieldExpression><![CDATA[$F{publication_Name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="130" y="50" width="425" height="20" uuid="c71991af-114a-4ac2-a5a1-584ee1a18d05"/>
-				<textFieldExpression><![CDATA[$F{expr}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="-1" width="520" height="20" uuid="20fa4f19-fcc0-4a4e-9039-5e2fbd448d96"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font isUnderline="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{type_publication_Name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="520" y="0" width="35" height="20" uuid="85f24c8a-1159-46f4-beee-9b943bb0cb2d"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font isUnderline="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{publication_Year}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="130" y="70" width="425" height="20" uuid="188815fe-7c6d-408a-af9a-af3e98d5b60c"/>
-				<textFieldExpression><![CDATA[$F{scientometric_base_Name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="130" y="90" width="425" height="30" uuid="5a6945f9-24a9-4141-b83f-fe4803c936e1"/>
-				<textFieldExpression><![CDATA[$F{collection_Name}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="20" width="130" height="30" uuid="de031204-7918-42f3-837c-076b202fcee0"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[Название:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="50" width="130" height="20" uuid="a7290b9b-a003-48fa-a20c-1c59692d7037"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[Автор(ы):]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="70" width="130" height="20" uuid="d7b22945-efa6-4c31-995f-83d61530659a"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[Наукометрическая база:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="90" width="130" height="30" uuid="f11d4123-be9e-4469-8310-be68de5964c6"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[Сборник:]]></text>
-			</staticText>
-		</band>
-	</detail>
-	<pageFooter>
-		<band height="43" splitType="Stretch">
-			<textField>
-				<reportElement x="355" y="13" width="100" height="30" uuid="cc3a14db-2ea7-44e4-823b-3fdcb25d4ca3"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="455" y="13" width="100" height="30" uuid="76063a8a-be82-4ea6-bfec-96bfa8140b26"/>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageFooter>
+    </queryString>
+    <field name="publication_Name" class="java.lang.String"/>
+    <field name="expr" class="java.lang.String"/>
+    <field name="type_publication_Name" class="java.lang.String"/>
+    <field name="publication_Year" class="java.lang.Integer"/>
+    <field name="scientometric_base_Name" class="java.lang.String"/>
+    <field name="collection_Name" class="java.lang.String"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="31" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="30" uuid="56ac4f1b-b74d-4355-a1e5-a5d88eb18534"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="19" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Публикации]]></text>
+            </staticText>
+        </band>
+    </title>
+    <detail>
+        <band height="124" splitType="Stretch">
+            <textField>
+                <reportElement x="130" y="20" width="425" height="30" uuid="458e00f1-99fb-4cd5-8e24-da811b354d77"/>
+                <textFieldExpression><![CDATA[$F{publication_Name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="130" y="50" width="425" height="20" uuid="c71991af-114a-4ac2-a5a1-584ee1a18d05"/>
+                <textFieldExpression><![CDATA[$F{expr}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="-1" width="520" height="20" uuid="20fa4f19-fcc0-4a4e-9039-5e2fbd448d96"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font isUnderline="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{type_publication_Name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="520" y="0" width="35" height="20" uuid="85f24c8a-1159-46f4-beee-9b943bb0cb2d"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font isUnderline="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{publication_Year}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="130" y="70" width="425" height="20" uuid="188815fe-7c6d-408a-af9a-af3e98d5b60c"/>
+                <textFieldExpression><![CDATA[$F{scientometric_base_Name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="130" y="90" width="425" height="30" uuid="5a6945f9-24a9-4141-b83f-fe4803c936e1"/>
+                <textFieldExpression><![CDATA[$F{collection_Name}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="0" y="20" width="130" height="30" uuid="de031204-7918-42f3-837c-076b202fcee0"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[Название:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="50" width="130" height="20" uuid="a7290b9b-a003-48fa-a20c-1c59692d7037"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[Автор(ы):]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="70" width="130" height="20" uuid="d7b22945-efa6-4c31-995f-83d61530659a"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[Наукометрическая база:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="90" width="130" height="30" uuid="f11d4123-be9e-4469-8310-be68de5964c6"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[Сборник:]]></text>
+            </staticText>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="43" splitType="Stretch">
+            <textField>
+                <reportElement x="355" y="13" width="100" height="30" uuid="cc3a14db-2ea7-44e4-823b-3fdcb25d4ca3"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement x="455" y="13" width="100" height="30" uuid="76063a8a-be82-4ea6-bfec-96bfa8140b26"/>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
 </jasperReport>

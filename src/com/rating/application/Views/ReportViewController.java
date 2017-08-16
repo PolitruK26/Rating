@@ -57,7 +57,6 @@ public class ReportViewController implements Initializable {
             e.printStackTrace();
         }
 
-
         comboBox.setItems(FXCollections.observableArrayList(
                 "Публикации",
                 "Авторы",

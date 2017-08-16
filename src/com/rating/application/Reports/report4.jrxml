@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
 <!-- 2017-06-20T15:03:59 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="329534de-8e89-4ea3-a3c6-b1e0c1b106db">
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="329534de-8e89-4ea3-a3c6-b1e0c1b106db">
+    <queryString language="SQL">
+        <![CDATA[SELECT
   certificate.certificate_Name,
   certificate.certificate_Number,
   certificate.certificate_Year,
@@ -20,74 +22,76 @@ FROM author_certificate
     ON certificate.ID_type_certificate = type_certificate.ID_type_certificate
 GROUP BY certificate_Name
 ORDER BY certificate_Name]]>
-	</queryString>
-	<field name="certificate_Name" class="java.lang.String"/>
-	<field name="certificate_Number" class="java.lang.String"/>
-	<field name="certificate_Year" class="java.lang.Integer"/>
-	<field name="type_certificate_Name" class="java.lang.String"/>
-	<field name="GROUP_CONCAT(author.author_Second_Name, &apos; &apos;, author.author_First_Name, &apos;.&apos;, author.author_Middle_Name, &apos;.&apos; SEPARATOR &apos;, &apos;)" class="java.lang.String"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band height="33" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="550" height="30" uuid="a9cae592-9f9b-4f88-b2d5-2a6c330c9e4d"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="22" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Свидетельства]]></text>
-			</staticText>
-		</band>
-	</title>
-	<detail>
-		<band height="60" splitType="Stretch">
-			<textField>
-				<reportElement x="180" y="0" width="370" height="30" uuid="633924db-7b4f-4670-84f8-9ae95c05b862"/>
-				<textFieldExpression><![CDATA[$F{certificate_Name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="40" y="20" width="111" height="20" uuid="9049a35b-c6c1-47b2-99db-0abc752b19e6"/>
-				<textFieldExpression><![CDATA[$F{certificate_Number}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="40" y="40" width="111" height="20" uuid="1f895812-fc0c-4388-998d-cce774eec494"/>
-				<textFieldExpression><![CDATA[$F{certificate_Year}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="0" width="180" height="20" uuid="552840c4-1491-4e89-af17-2dbcd2c0382a"/>
-				<textFieldExpression><![CDATA[$F{type_certificate_Name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="230" y="30" width="320" height="20" uuid="670ae1c1-ba5a-47c3-9a46-b1f2a274ce1a"/>
-				<textFieldExpression><![CDATA[$F{GROUP_CONCAT(author.author_Second_Name, ' ', author.author_First_Name, '.', author.author_Middle_Name, '.' SEPARATOR ', ')}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="180" y="30" width="50" height="20" uuid="1fe74b4d-1ecd-48a6-ab55-911d3d52cebe"/>
-				<text><![CDATA[Авторы: ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="20" width="40" height="20" uuid="e5b9dffa-66a8-428e-a268-ab64e7d1c58b"/>
-				<text><![CDATA[Номер: ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="40" width="40" height="19" uuid="cde07702-2e8f-4c54-a9a4-754e3ff3452e"/>
-				<text><![CDATA[Год: ]]></text>
-			</staticText>
-		</band>
-	</detail>
-	<pageFooter>
-		<band height="34" splitType="Stretch">
-			<textField>
-				<reportElement x="350" y="0" width="100" height="30" uuid="3fbb132b-766d-49c3-93d1-d69eec16b8e8"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Страница " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="450" y="0" width="100" height="30" uuid="cce88c1f-d905-4935-a109-e28c9cec341f"/>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[" из " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageFooter>
+    </queryString>
+    <field name="certificate_Name" class="java.lang.String"/>
+    <field name="certificate_Number" class="java.lang.String"/>
+    <field name="certificate_Year" class="java.lang.Integer"/>
+    <field name="type_certificate_Name" class="java.lang.String"/>
+    <field name="GROUP_CONCAT(author.author_Second_Name, &apos; &apos;, author.author_First_Name, &apos;.&apos;, author.author_Middle_Name, &apos;.&apos; SEPARATOR &apos;, &apos;)"
+           class="java.lang.String"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="33" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="550" height="30" uuid="a9cae592-9f9b-4f88-b2d5-2a6c330c9e4d"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="22" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Свидетельства]]></text>
+            </staticText>
+        </band>
+    </title>
+    <detail>
+        <band height="60" splitType="Stretch">
+            <textField>
+                <reportElement x="180" y="0" width="370" height="30" uuid="633924db-7b4f-4670-84f8-9ae95c05b862"/>
+                <textFieldExpression><![CDATA[$F{certificate_Name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="40" y="20" width="111" height="20" uuid="9049a35b-c6c1-47b2-99db-0abc752b19e6"/>
+                <textFieldExpression><![CDATA[$F{certificate_Number}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="40" y="40" width="111" height="20" uuid="1f895812-fc0c-4388-998d-cce774eec494"/>
+                <textFieldExpression><![CDATA[$F{certificate_Year}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="0" width="180" height="20" uuid="552840c4-1491-4e89-af17-2dbcd2c0382a"/>
+                <textFieldExpression><![CDATA[$F{type_certificate_Name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="230" y="30" width="320" height="20" uuid="670ae1c1-ba5a-47c3-9a46-b1f2a274ce1a"/>
+                <textFieldExpression>
+                    <![CDATA[$F{GROUP_CONCAT(author.author_Second_Name, ' ', author.author_First_Name, '.', author.author_Middle_Name, '.' SEPARATOR ', ')}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="180" y="30" width="50" height="20" uuid="1fe74b4d-1ecd-48a6-ab55-911d3d52cebe"/>
+                <text><![CDATA[Авторы: ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="20" width="40" height="20" uuid="e5b9dffa-66a8-428e-a268-ab64e7d1c58b"/>
+                <text><![CDATA[Номер: ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="40" width="40" height="19" uuid="cde07702-2e8f-4c54-a9a4-754e3ff3452e"/>
+                <text><![CDATA[Год: ]]></text>
+            </staticText>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="34" splitType="Stretch">
+            <textField>
+                <reportElement x="350" y="0" width="100" height="30" uuid="3fbb132b-766d-49c3-93d1-d69eec16b8e8"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA["Страница " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement x="450" y="0" width="100" height="30" uuid="cce88c1f-d905-4935-a109-e28c9cec341f"/>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression><![CDATA[" из " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
 </jasperReport>
